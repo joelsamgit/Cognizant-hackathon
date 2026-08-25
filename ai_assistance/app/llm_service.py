@@ -101,12 +101,12 @@ class GroqLLMService:
                 {"role": "user", "content": user_prompt}
             ],
             temperature=0.1,
-            max_tokens=300,
+            max_tokens=800,
             response_format={"type": "json_object"}
         )
 
         content = response.choices[0].message.content
-        
+
         try:
             parsed = json.loads(content)
             caretaker_message = parsed.get("caretaker_message", "").strip()

@@ -6,7 +6,10 @@ from .schemas import VacationModeRequest, VacationModeResponse
 
 class AIAssistanceClient:
     def __init__(self, base_url: Optional[str] = None):
-        self.base_url = base_url or os.getenv("AI_ASSISTANCE_URL", "http://localhost:8000")
+        self.base_url = base_url or os.getenv(
+            "AI_ASSISTANCE_URL",
+            "http://ai-assistance:8000",
+        )
         self.timeout = httpx.Timeout(30.0)
 
     async def generate_caretaker_message(self, request: VacationModeRequest) -> Optional[str]:

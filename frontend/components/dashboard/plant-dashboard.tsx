@@ -9,6 +9,7 @@ import { SummaryGrid } from "@/components/dashboard/summary-grid";
 import { DeleteDialog } from "@/components/plants/delete-dialog";
 import { PlantCard } from "@/components/plants/plant-card";
 import { PlantFormDialog } from "@/components/plants/plant-form-dialog";
+import { VacationDialog } from "@/components/vacation/vacation-dialog";
 import { ToastMessage, ToastViewport } from "@/components/ui/toast";
 import { getRooms, queryPlants } from "@/lib/plant-query";
 import {
@@ -42,6 +43,7 @@ export function PlantDashboard() {
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [wateringIds, setWateringIds] = useState<Set<number>>(() => new Set());
+  const [vacationOpen, setVacationOpen] = useState(false);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const nextToastId = useRef(1);
   const toastTimers = useRef(new Map<number, ReturnType<typeof setTimeout>>());
@@ -173,6 +175,7 @@ export function PlantDashboard() {
           setFormError(null);
           setFormPlant("new");
         }}
+        onVacation={() => setVacationOpen(true)}
       />
 
       <div className="mt-8">
@@ -257,6 +260,15 @@ export function PlantDashboard() {
           onClose={() => {
             if (!deleting) setDeleteTarget(null);
           }}
+        />
+      )}
+
+      {vacationOpen && loadState === "ready" && (
+        <VacationDialog
+          key="vacation"
+          plants={plants}
+          onClose={() => setVacationOpen(false)}
+          onNotify={pushToast}
         />
       )}
 

@@ -1,13 +1,14 @@
-import { Leaf, Plus } from "@phosphor-icons/react/dist/ssr";
+import { AirplaneTakeoff, Leaf, Plus } from "@phosphor-icons/react/dist/ssr";
 
 import { Button } from "@/components/ui/button";
 
 
 interface DashboardHeaderProps {
   onAdd: () => void;
+  onVacation: () => void;
 }
 
-export function DashboardHeader({ onAdd }: DashboardHeaderProps) {
+export function DashboardHeader({ onAdd, onVacation }: DashboardHeaderProps) {
   return (
     <header className="flex flex-col gap-6 border-b border-[var(--line)] pb-7 sm:flex-row sm:items-end sm:justify-between">
       <div className="flex items-start gap-4">
@@ -24,10 +25,16 @@ export function DashboardHeader({ onAdd }: DashboardHeaderProps) {
           </p>
         </div>
       </div>
-      <Button onClick={onAdd} className="w-full sm:w-auto">
-        <Plus size={18} weight="bold" aria-hidden="true" />
-        Add Plant
-      </Button>
+      <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <Button variant="secondary" onClick={onVacation} className="w-full sm:w-auto">
+          <AirplaneTakeoff size={18} weight="fill" aria-hidden="true" />
+          Vacation Mode
+        </Button>
+        <Button onClick={onAdd} className="w-full sm:w-auto">
+          <Plus size={18} weight="bold" aria-hidden="true" />
+          Add Plant
+        </Button>
+      </div>
     </header>
   );
 }

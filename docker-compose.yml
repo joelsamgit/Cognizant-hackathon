@@ -16,6 +16,50 @@ services:
       timeout: 5s
       retries: 10
 
+  ai-assistance:
+    build:
+      context: ./ai_assistance
+    restart: unless-stopped
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY:?Set GROQ_API_KEY in .env}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.1-8b-instant}
+    ports:
+      - "8001:8000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  vacation-mode:
+    build:
+      context: ./vacation_mode
+    restart: unless-stopped
+    environment:
+      AI_ASSISTANCE_URL: http://ai-assistance:8000
+    depends_on:
+      ai-assistance:
+        condition: service_healthy
+    ports:
+      - "8002:8001"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=2)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   backend:
     build:
       context: ./backend
@@ -47,11 +91,15 @@ services:
       context: ./frontend
       args:
         API_URL: http://backend:8000
+        VACATION_API_URL: http://vacation-mode:8001
     restart: unless-stopped
     environment:
       API_URL: http://backend:8000
+      VACATION_API_URL: http://vacation-mode:8001
     depends_on:
       backend:
+        condition: service_healthy
+      vacation-mode:
         condition: service_healthy
     ports:
       - "3000:3000"
@@ -63,4 +111,3 @@ services:
 
 volumes:
   postgres_data:
-
