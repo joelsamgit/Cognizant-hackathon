@@ -98,6 +98,39 @@ class TestVacationService:
         assert response.risk_level == RiskLevel.MEDIUM
         assert response.caretaker_message is None
 
+    def test_fallback_warning_only_for_unsafe_plants(self):
+        request = VacationModeRequest(
+            vacation_start=datetime(2026, 12, 10, 8, 0, 0),
+            vacation_end=datetime(2026, 12, 17, 8, 0, 0),
+            plants=[
+                PlantWateringSchedule(
+                    plant_name="Greeny",
+                    species="Golden Pothos",
+                    location="Living Room",
+                    specific_spot="High shelf",
+                    frequency_days=10,
+                    amount_ml=150,
+                    last_watered=datetime(2026, 12, 8, 8, 0, 0),
+                    pet_safety="toxic",
+                ),
+                PlantWateringSchedule(
+                    plant_name="Pesto",
+                    species="Sweet Basil",
+                    location="Kitchen",
+                    specific_spot="Window",
+                    frequency_days=4,
+                    amount_ml=150,
+                    last_watered=datetime(2026, 12, 8, 8, 0, 0),
+                    pet_safety="safe",
+                ),
+            ],
+            season="Winter",
+            season_factor=1.4,
+        )
+        message = VacationService()._fallback_message(request)
+        assert "40% less often" in message
+        assert message.count("Wear gloves") == 1
+
     @pytest.mark.asyncio
     async def test_generate_full_plan_with_ai(self, sample_request):
         service = VacationService()

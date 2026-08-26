@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 
 
@@ -19,6 +19,11 @@ class PlantWateringSchedule(BaseModel):
     amount_ml: int = Field(..., ge=0, le=10000)
     last_watered: datetime
     notes: Optional[str] = Field(default="", max_length=500)
+    base_frequency_days: Optional[int] = Field(default=None, ge=1, le=365)
+    pet_safety: Optional[str] = None
+    toxic_cats: Optional[bool] = None
+    toxic_dogs: Optional[bool] = None
+    placement_tip: Optional[str] = Field(default=None, max_length=300)
 
 
 class VacationModeRequest(BaseModel):
@@ -27,6 +32,8 @@ class VacationModeRequest(BaseModel):
     plants: list[PlantWateringSchedule] = Field(..., min_length=1)
     risk_level: RiskLevel = RiskLevel.MEDIUM
     additional_notes: Optional[str] = Field(default="", max_length=1000)
+    season: Optional[str] = None
+    season_factor: Optional[float] = Field(default=None, gt=0)
 
     @field_validator('vacation_end')
     @classmethod
@@ -44,7 +51,7 @@ class VacationModeResponse(BaseModel):
     risk_level: RiskLevel
     watering_schedule: list[PlantWateringSchedule]
     caretaker_message: Optional[str] = None
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class HealthResponse(BaseModel):

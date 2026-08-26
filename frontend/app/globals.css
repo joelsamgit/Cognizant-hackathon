@@ -1,54 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --page: #f3f5f1;
-  --page-muted: #e9eee8;
-  --surface: #fbfcfa;
-  --surface-raised: #ffffff;
-  --surface-strong: #193c2c;
-  --text: #17251e;
-  --text-muted: #617067;
-  --text-soft: #7c8981;
-  --line: #d8dfd9;
-  --line-strong: #bcc9c0;
-  --accent: #286a49;
-  --accent-hover: #1f593c;
-  --accent-soft: #dcebe1;
-  --healthy: #25734d;
-  --healthy-soft: #dceee4;
-  --soon: #9a6309;
-  --soon-soft: #f8e9bc;
-  --risk: #aa3e37;
-  --risk-soft: #f5deda;
-  --danger: #a33630;
-  --shadow: 0 18px 50px rgba(30, 67, 47, 0.08);
+  --page: #d9eedf;
+  --page-muted: #cce8d3;
+  --surface: #eaf6ed;
+  --surface-raised: #f2f9f3;
+  --surface-strong: #1f603d;
+  --text: #103c27;
+  --text-muted: #416f54;
+  --text-soft: #6b9278;
+  --line: #acd6b7;
+  --line-strong: #80bd8e;
+  --accent: #51a66a;
+  --accent-hover: #3f9258;
+  --accent-soft: #c8e9d0;
+  --healthy: #3f9b61;
+  --healthy-soft: #c9ead2;
+  --soon: #a8730f;
+  --soon-soft: #f4e7bd;
+  --risk: #bb4e47;
+  --risk-soft: #f2d9d5;
+  --danger: #a9413b;
+  --shadow: 0 18px 50px rgba(31, 96, 61, 0.1);
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --page: #111713;
-    --page-muted: #182019;
-    --surface: #18211b;
-    --surface-raised: #1e2821;
-    --surface-strong: #b8d9c5;
-    --text: #eef4ef;
-    --text-muted: #a9b7ad;
-    --text-soft: #89978e;
-    --line: #344139;
-    --line-strong: #4a5b50;
-    --accent: #79bd92;
-    --accent-hover: #91cba6;
-    --accent-soft: #263d2e;
-    --healthy: #84c69d;
-    --healthy-soft: #263f30;
-    --soon: #e2b553;
-    --soon-soft: #453a20;
-    --risk: #e4877f;
-    --risk-soft: #472d2b;
-    --danger: #e4877f;
-    --shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
-    color-scheme: dark;
+    --page: #d9eedf;
+    --page-muted: #cce8d3;
+    --surface: #eaf6ed;
+    --surface-raised: #f2f9f3;
+    --surface-strong: #1f603d;
+    --text: #103c27;
+    --text-muted: #416f54;
+    --text-soft: #6b9278;
+    --line: #acd6b7;
+    --line-strong: #80bd8e;
+    --accent: #51a66a;
+    --accent-hover: #3f9258;
+    --accent-soft: #c8e9d0;
+    --healthy: #3f9b61;
+    --healthy-soft: #c9ead2;
+    --soon: #a8730f;
+    --soon-soft: #f4e7bd;
+    --risk: #bb4e47;
+    --risk-soft: #f2d9d5;
+    --danger: #a9413b;
+    color-scheme: light;
   }
 }
 
@@ -105,7 +104,7 @@ button:disabled {
 }
 
 dialog::backdrop {
-  background: rgba(9, 18, 12, 0.55);
+  background: rgba(16, 60, 39, 0.52);
   backdrop-filter: blur(4px);
 }
 
@@ -129,6 +128,68 @@ dialog::backdrop {
   }
 }
 
+.plant-avatar__growth {
+  transform-origin: 50px 70px;
+}
+
+.plant-avatar__pot {
+  transform-origin: 50px 70px;
+}
+
+.plant-avatar--happy .plant-avatar__growth {
+  animation: plant-sway 3.2s ease-in-out infinite;
+}
+
+.plant-avatar--happy .plant-avatar__pot {
+  animation: pot-breathe 3.2s ease-in-out infinite;
+}
+
+.plant-avatar--doubtful .plant-avatar__growth {
+  transform: rotate(-2deg);
+  filter: saturate(0.72);
+}
+
+.plant-avatar--sad .plant-avatar__growth {
+  animation: plant-sink 4.5s ease-in-out infinite;
+  transform: rotate(7deg);
+  filter: saturate(0.55);
+}
+
+.plant-avatar__flower {
+  animation: flower-breathe 2.8s ease-in-out infinite;
+}
+
+.xp-chip {
+  animation: xp-float 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes plant-sway {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes pot-breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+}
+
+@keyframes plant-sink {
+  0%, 100% { transform: translateY(0) rotate(7deg); }
+  50% { transform: translateY(2px) rotate(9deg); }
+}
+
+@keyframes flower-breathe {
+  0%, 100% { transform: scale(0.96); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes xp-float {
+  0% { opacity: 0; transform: translateY(8px) scale(0.85); }
+  18% { opacity: 1; transform: translateY(0) scale(1); }
+  75% { opacity: 1; transform: translateY(-22px) scale(1); }
+  100% { opacity: 0; transform: translateY(-38px) scale(0.92); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -139,4 +200,3 @@ dialog::backdrop {
     transition-duration: 0.01ms !important;
   }
 }
-

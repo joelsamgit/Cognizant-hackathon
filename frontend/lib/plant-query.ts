@@ -1,10 +1,11 @@
-import type { Plant, PlantSort } from "../types/plant";
+import type { PetSafetyFilter, Plant, PlantSort } from "../types/plant";
 
 
 interface QueryOptions {
   room: string;
   search: string;
   sort: PlantSort;
+  petSafety: PetSafetyFilter;
 }
 
 export function queryPlants(plants: Plant[], options: QueryOptions): Plant[] {
@@ -12,6 +13,11 @@ export function queryPlants(plants: Plant[], options: QueryOptions): Plant[] {
 
   return plants
     .filter((plant) => options.room === "All" || plant.room === options.room)
+    .filter((plant) => {
+      if (options.petSafety === "safe") return plant.pet_safety === "safe";
+      if (options.petSafety === "hide-toxic") return plant.pet_safety !== "toxic";
+      return true;
+    })
     .filter((plant) => {
       if (!searchTerm) return true;
       return [plant.nickname, plant.species].some((value) =>

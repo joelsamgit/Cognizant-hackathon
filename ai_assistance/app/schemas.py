@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 
 
@@ -23,7 +23,7 @@ class CareInstructionRequest(BaseModel):
     action: CareAction = Field(..., description="Care action to perform")
     amount_ml: Optional[int] = Field(default=None, ge=0, le=10000, description="Amount in milliliters (for water/fertilize)")
     notes: Optional[str] = Field(default="", max_length=500, description="Additional care notes")
-    timestamp: Optional[datetime] = Field(default_factory=datetime.utcnow, description="When the care was performed")
+    timestamp: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc), description="When the care was performed")
 
     @field_validator('amount_ml')
     @classmethod
@@ -50,7 +50,7 @@ class CareInstructionResponse(BaseModel):
     amount_ml: Optional[int]
     notes: Optional[str]
     timestamp: datetime
-    generated_at: datetime = Field(default_factory=datetime.utcnow)
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class HealthResponse(BaseModel):
@@ -68,6 +68,11 @@ class WateringScheduleItem(BaseModel):
     amount_ml: int = Field(..., ge=0, le=10000, description="Amount per watering in ml")
     last_watered: datetime = Field(..., description="Last watering timestamp")
     notes: Optional[str] = Field(default="", max_length=500)
+    base_frequency_days: Optional[int] = Field(default=None, ge=1, le=365)
+    pet_safety: Optional[str] = None
+    toxic_cats: Optional[bool] = None
+    toxic_dogs: Optional[bool] = None
+    placement_tip: Optional[str] = Field(default=None, max_length=300)
 
 
 class VacationCareRequest(BaseModel):
@@ -76,6 +81,8 @@ class VacationCareRequest(BaseModel):
     plants: list[WateringScheduleItem] = Field(..., min_length=1, description="Plants needing care during vacation")
     risk_level: Optional[str] = Field(default="medium", description="Overall risk level: low, medium, high")
     additional_notes: Optional[str] = Field(default="", max_length=1000, description="Any additional care context")
+    season: Optional[str] = None
+    season_factor: Optional[float] = Field(default=None, gt=0)
 
     @field_validator('vacation_end')
     @classmethod
@@ -99,4 +106,4 @@ class VacationCareResponse(BaseModel):
     vacation_end: datetime
     plant_count: int
     risk_level: str
-    generated_at: datetime = Field(default_factory=datetime.utcnow)
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

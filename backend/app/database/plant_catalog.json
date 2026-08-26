@@ -1,0 +1,663 @@
+[
+  {
+    "id": "tulsi_holy_basil",
+    "name": "Tulsi (Holy Basil)",
+    "indian_name": "Tulsi / Shyam & Rama Tulsi",
+    "common_name": "Holy Basil",
+    "scientific_name": "Ocimum tenuiflorum",
+    "difficulty": "Easy",
+    "category": "Classic Indian Herb",
+    "front": {
+      "tagline": "The sacred queen of herbs found in every Indian courtyard.",
+      "image_url": "/images/tulsi.png",
+      "vibe": "Aromatic, divine, and protective",
+      "ideal_spot": "North-East or East balcony / courtyard"
+    },
+    "story": {
+      "name_origin": "'Tulsi' in Sanskrit translates to 'the incomparable one'. In Hindu tradition, it represents Goddess Vrinda / Lakshmi.",
+      "cultural_context": "Revered as an avatar of purity, its leaves are used in daily puja and brewed in kadha for immunity and cough relief.",
+      "fun_fact": "Tulsi emits oxygen for nearly 20 hours a day and produces natural eugenol that keeps mosquitoes away from balcony doors!",
+      "symbolism": "Spiritual purity, good health, and family longevity."
+    },
+    "care_guide": {
+      "sunlight": "Direct Sunlight (4-6 Hours)",
+      "sunlight_detail": "Loves sunny balconies. Provide afternoon shade in extreme peak Indian summers (May-June).",
+      "watering_frequency_days": 2,
+      "water_amount_ml": 250,
+      "watering_method": "Water in the morning. Keep soil evenly moist, but reduce watering during monsoon season.",
+      "pro_tip": "Pinch off the flowering seed spikes (manjaris) at the top so the plant stays bushy and thick.",
+      "common_mistake": "Overwatering during winter or placing in dark indoor rooms without direct sun."
+    }
+  },
+  {
+    "id": "money_plant_pothos",
+    "name": "Money Plant",
+    "indian_name": "Money Plant / Paisa Bel",
+    "common_name": "Golden Pothos",
+    "scientific_name": "Epipremnum aureum",
+    "difficulty": "Super Easy (Unkillable)",
+    "category": "Classic Indian Vine",
+    "front": {
+      "tagline": "The evergreen Vastu vine thriving in water bottles & balcony pots.",
+      "image_url": "/images/money_plant.png",
+      "vibe": "Lush, trailing, and auspicious",
+      "ideal_spot": "South-East corner of the living room (Lord Ganesha direction)"
+    },
+    "story": {
+      "name_origin": "In Vastu, its heart-shaped leaves that climb rapidly upward are believed to attract wealth and continuous financial flow.",
+      "cultural_context": "Found in almost every Indian living room in recycled glass bottles filled with water or climbing moss sticks.",
+      "fun_fact": "You can grow Money Plant entirely in plain tap water without soil for years by changing the water every 10–14 days!",
+      "symbolism": "Wealth, abundance, and positive energy."
+    },
+    "care_guide": {
+      "sunlight": "Bright Indirect Light",
+      "sunlight_detail": "Loves bright filtered balcony light. Harsh midday direct sun will scorch its golden variegated leaves.",
+      "watering_frequency_days": 6,
+      "water_amount_ml": 300,
+      "watering_method": "In soil: water when the top 1 inch feels dry. In water bottles: replace water every 10 days.",
+      "pro_tip": "According to Vastu, never let Money Plant vines trail along the floor—train them upwards on a wall or pole.",
+      "common_mistake": "Using chlorinated tap water straight from the tap without letting it rest for a few hours."
+    }
+  },
+  {
+    "id": "curry_leaf_plant",
+    "name": "Curry Leaf Plant",
+    "indian_name": "Kadi Patta / Kariveppilai",
+    "common_name": "Curry Tree",
+    "scientific_name": "Murraya koenigii",
+    "difficulty": "Easy to Moderate",
+    "category": "Culinary & Aromatic Herb",
+    "front": {
+      "tagline": "The soul of the Indian tadka, fresh from balcony to kitchen.",
+      "image_url": "/images/curry_leaf.png",
+      "vibe": "Aromatic, culinary, and earthy",
+      "ideal_spot": "West or North-West side of the balcony"
+    },
+    "story": {
+      "name_origin": "Called 'Meetha Neem' because its leaves resemble bitter neem but yield rich citrus-nutty aromas when tempered in ghee.",
+      "cultural_context": "An indispensable seasoning for dal, sambar, and rasam, praised in Ayurveda for hair growth and gut health.",
+      "fun_fact": "Feeding your Curry Leaf plant diluted sour buttermilk (chaas) once a month provides nitrogen that doubles growth speed!",
+      "symbolism": "Nourishment, protection, and home warmth."
+    },
+    "care_guide": {
+      "sunlight": "Full Direct Sun (5-6 Hours)",
+      "sunlight_detail": "Loves warm Indian weather and maximum sunlight. Slows down growth during cold North Indian winters.",
+      "watering_frequency_days": 3,
+      "water_amount_ml": 400,
+      "watering_method": "Water deeply until water drains freely from the pot base. Let soil surface dry slightly between waterings.",
+      "pro_tip": "Prune the main stem once a year during spring to force multiple bushy side branches.",
+      "common_mistake": "Overwatering in winter or using heavy non-draining clay soil without cocopeat/sand."
+    }
+  },
+  {
+    "id": "aloe_vera_ghritkumari",
+    "name": "Aloe Vera",
+    "indian_name": "Ghritkumari / Korphad",
+    "common_name": "First-Aid Plant",
+    "scientific_name": "Aloe barbadensis miller",
+    "difficulty": "Beginner (Zero Hassle)",
+    "category": "Medicinal Succulent",
+    "front": {
+      "tagline": "The home Ayurvedic doctor for instant skin and hair care.",
+      "image_url": "/images/aloe_vera.png",
+      "vibe": "Cooling, medicinal, and rugged",
+      "ideal_spot": "North or East balcony for positive energy"
+    },
+    "story": {
+      "name_origin": "In Sanskrit Ayurveda, it is called 'Ghritkumari' ('young girl') because it was believed to preserve youthful skin and vitality.",
+      "cultural_context": "Found on nearly every Indian terrace. The raw soothing gel is applied to hair before washing or rubbed on sun-exposed skin.",
+      "fun_fact": "A single mother Aloe Vera plant will produce dozens of miniature clone pups around its base every monsoon!",
+      "symbolism": "Natural healing, protection, and calm resilience."
+    },
+    "care_guide": {
+      "sunlight": "Bright Sun to Partial Direct Sunlight",
+      "sunlight_detail": "Loves bright sunny balconies. If leaves turn reddish-brown, it is getting too much extreme summer heat—move to slight shade.",
+      "watering_frequency_days": 10,
+      "water_amount_ml": 200,
+      "watering_method": "Soak deeply, then let soil dry out completely before watering again. During monsoons, keep away from non-stop rain.",
+      "pro_tip": "Always plant in terracotta clay pots with a drainage hole—plastic pots trap moisture and rot roots.",
+      "common_mistake": "Watering every day like a regular plant, causing leaves to turn yellow and mushy."
+    }
+  },
+  {
+    "id": "areca_palm",
+    "name": "Areca Palm",
+    "indian_name": "Areca Palm / Supari Palm",
+    "common_name": "Golden Cane Palm",
+    "scientific_name": "Dypsis lutescens",
+    "difficulty": "Easy",
+    "category": "Living Room Statement",
+    "front": {
+      "tagline": "The tropical feather-frond tree that purifies urban apartment air.",
+      "image_url": "/images/areca_palm.png",
+      "vibe": "Grand, lush, and resort-like",
+      "ideal_spot": "North-East or East corner of the hall"
+    },
+    "story": {
+      "name_origin": "A cousin of the Betel Nut (Supari) palm. Named 'Golden Cane' because its mature stems turn a warm golden-yellow color.",
+      "cultural_context": "The staple decorative plant for Indian apartment living rooms, hotels, and entrance lobbies.",
+      "fun_fact": "Ranked by NASA as a top air purifier and natural humidifier, releasing up to 1 liter of moisture every 24 hours in dry AC rooms!",
+      "symbolism": "Peace, hospitality, and luxurious greenery."
+    },
+    "care_guide": {
+      "sunlight": "Bright Filtered / Indirect Sunlight",
+      "sunlight_detail": "Place near a large living room window. Direct harsh midday sunlight turns green fronds yellow and scorched.",
+      "watering_frequency_days": 5,
+      "water_amount_ml": 500,
+      "watering_method": "Keep soil evenly moist during summers. Reduce watering in winter and during the rainy season.",
+      "pro_tip": "Mist the leaves with a spray bottle twice a week to maintain humidity in air-conditioned apartments.",
+      "common_mistake": "Allowing standing water to sit in the base collection plate, leading to stem rot."
+    }
+  },
+  {
+    "id": "snake_plant_sansevieria",
+    "name": "Snake Plant",
+    "indian_name": "Sansevieria / Saap Ka Paudha",
+    "common_name": "Mother-in-Law's Tongue",
+    "scientific_name": "Dracaena trifasciata",
+    "difficulty": "Beginner (Indestructible)",
+    "category": "Bedroom Air Purifier",
+    "front": {
+      "tagline": "The 24/7 oxygen machine that survives weeks with zero water.",
+      "image_url": "/images/snake_plant.png",
+      "vibe": "Architectural, sharp, and modern",
+      "ideal_spot": "South or West direction in bedrooms/halls"
+    },
+    "story": {
+      "name_origin": "Nicknamed 'Snake Plant' for its sword-like leaves with yellow borders and green patterned bands resembling serpent skin.",
+      "cultural_context": "Extremely popular in urban Indian cities (Bengaluru, Delhi, Mumbai) for combating indoor AQI and pollution spikes.",
+      "fun_fact": "One of the rare plants that absorbs CO2 and pumps out pure oxygen throughout the night, making it ideal beside your bed!",
+      "symbolism": "Endurance, steadfast energy, and cleansing toxicity."
+    },
+    "care_guide": {
+      "sunlight": "Low Light to Bright Indirect Light",
+      "sunlight_detail": "Extremely adaptable. Lives happily in dark bedroom corners, AC offices, or sunny balconies.",
+      "watering_frequency_days": 15,
+      "water_amount_ml": 200,
+      "watering_method": "Water only once every 2-3 weeks when soil is bone dry. In winter or monsoon, water once a month.",
+      "pro_tip": "Wipe the leaves with a dry cloth once a month to remove city dust so it purifies air efficiently.",
+      "common_mistake": "Watering into the center crown of the plant. Always pour water directly onto the soil."
+    }
+  },
+  {
+    "id": "jade_plant_kuberakshi",
+    "name": "Jade Plant",
+    "indian_name": "Kuberakshi / Money Gem Plant",
+    "common_name": "Good Luck Plant",
+    "scientific_name": "Crassula ovata",
+    "difficulty": "Easy",
+    "category": "Vastu Succulent",
+    "front": {
+      "tagline": "Fleshy jade-green coin leaves that attract wealth and good luck.",
+      "image_url": "/images/jade_plant.png",
+      "vibe": "Auspicious, compact, and woody",
+      "ideal_spot": "Right side of main entrance door or North-East"
+    },
+    "story": {
+      "name_origin": "Known in Vastu as 'Kuberakshi' (the eye of Lord Kubera, treasurer of the Gods) because its oval leaves resemble emerald gems and coins.",
+      "cultural_context": "Considered an auspicious gift during Diwali, Griha Pravesh (housewarming), and new business openings.",
+      "fun_fact": "A Jade Plant can develop thick wooden tree-like trunks and live for over 50 years, looking like a miniature bonsai with zero training!",
+      "symbolism": "Wealth attraction, prosperity, and enduring friendship."
+    },
+    "care_guide": {
+      "sunlight": "Direct Morning Sun (3-4 Hours) + Bright Light",
+      "sunlight_detail": "Needs adequate light to keep stems sturdy and compact. In low light, it stretches and becomes leggy.",
+      "watering_frequency_days": 10,
+      "water_amount_ml": 200,
+      "watering_method": "Check if bottom leaves feel soft before watering. Never water when soil is already wet.",
+      "pro_tip": "Rotate the pot 90 degrees every week so all sides get equal sunlight and grow evenly.",
+      "common_mistake": "Using regular heavy garden mud without sand/perlite; root rot is the #1 killer of Jade in India."
+    }
+  },
+  {
+    "id": "spider_plant_variegated",
+    "name": "Spider Plant",
+    "indian_name": "Spider Plant / Ribbon Grass",
+    "common_name": "Airplane Plant",
+    "scientific_name": "Chlorophytum comosum",
+    "difficulty": "Very Easy",
+    "category": "Hanging Balcony Plant",
+    "front": {
+      "tagline": "Fountain-style striped leaves with baby shoots hanging in air.",
+      "image_url": "/images/spider_plant.png",
+      "vibe": "Charming, airy, and graceful",
+      "ideal_spot": "North or East window / balcony ceiling"
+    },
+    "story": {
+      "name_origin": "Named for miniature baby offshoots that dangle from long curving stems like baby spiders suspended on webs.",
+      "cultural_context": "A beloved choice for hanging pots on balcony grills across Indian apartments to create green privacy curtains.",
+      "fun_fact": "A single healthy mother Spider Plant will produce 10–15 baby plantlets every season that you can snip off and pot for free gifts!",
+      "symbolism": "Harmony, lightness, and positive opportunities."
+    },
+    "care_guide": {
+      "sunlight": "Bright Indirect Balcony Light",
+      "sunlight_detail": "Loves bright shaded balconies. Harsh direct midday sun turns white stripes dull and crispy.",
+      "watering_frequency_days": 5,
+      "water_amount_ml": 250,
+      "watering_method": "Water when topsoil feels dry. Its fleshy tuber roots store water, so it tolerates missed waterings.",
+      "pro_tip": "If leaf tips turn brown, switch from hard tap water to RO / filtered water to avoid salt buildup.",
+      "common_mistake": "Placing in dark corners with no light, which stops baby shoots from forming."
+    }
+  },
+  {
+    "id": "rubber_plant_burgundy",
+    "name": "Rubber Plant",
+    "indian_name": "Rubber Plant / Ficus Elastica",
+    "common_name": "India Rubber Tree",
+    "scientific_name": "Ficus elastica",
+    "difficulty": "Easy to Moderate",
+    "category": "Native Indian Giant",
+    "front": {
+      "tagline": "Native Indian giant with thick, leather-sheened bronze leaves.",
+      "image_url": "/images/rubber_plant.png",
+      "vibe": "Polished, bold, and luxurious",
+      "ideal_spot": "South-East corner of the hall or balcony"
+    },
+    "story": {
+      "name_origin": "Native to Northeast India (Assam and Meghalaya). The milky white sap inside its stems was historically tapped for natural latex rubber.",
+      "cultural_context": "In Meghalaya, the aerial living roots of the Indian Rubber Tree are guided across rivers to form the famous 'Living Root Bridges'!",
+      "fun_fact": "Its massive glossy leaves act like a magnetic sponge for indoor dust and airborne toxins, making indoor air noticeably crisper.",
+      "symbolism": "Wealth, abundance, steadfast balance, and strength."
+    },
+    "care_guide": {
+      "sunlight": "Bright Indirect to Gentle Morning Sunlight",
+      "sunlight_detail": "Needs ample bright light to maintain its deep burgundy-bronze leaf color. Near a large window is ideal.",
+      "watering_frequency_days": 7,
+      "water_amount_ml": 450,
+      "watering_method": "Water thoroughly until water drains from the bottom. Let top 2 inches dry out before the next round.",
+      "pro_tip": "Wipe the thick leaves once every two weeks with a soft damp cotton cloth to preserve its mirror-like natural shine.",
+      "common_mistake": "Moving it around frequently; Ficus plants dislike sudden changes in location or light levels."
+    }
+  },
+  {
+    "id": "peace_lily_indoor",
+    "name": "Peace Lily",
+    "indian_name": "Peace Lily / Shanti Plant",
+    "common_name": "Spathiphyllum",
+    "scientific_name": "Spathiphyllum wallisii",
+    "difficulty": "Easy",
+    "category": "Flowering Air Purifier",
+    "front": {
+      "tagline": "The calming white flag of peace that tells you when it is thirsty.",
+      "image_url": "/images/peace_lily.png",
+      "vibe": "Serene, elegant, and communicative",
+      "ideal_spot": "Bedroom or Living Room North/West window"
+    },
+    "story": {
+      "name_origin": "Its graceful white hood-shaped bloom looks like a white flag of truce and surrender, earning it the name 'Peace Lily'.",
+      "cultural_context": "A favored indoor gift plant for modern Indian homes for bedroom side-tables and air-conditioned living rooms.",
+      "fun_fact": "Peace Lilies are famous communicators—if you forget to water it, the entire plant will droop completely flat, then perk straight back up 2 hours after a drink!",
+      "symbolism": "Peace, calm tranquility, and positive energy."
+    },
+    "care_guide": {
+      "sunlight": "Low to Medium Indirect Light (Shade-loving)",
+      "sunlight_detail": "Perfect for rooms with gentle light. Keep strictly away from harsh direct sun which burns the white flowers.",
+      "watering_frequency_days": 5,
+      "water_amount_ml": 300,
+      "watering_method": "Keep soil lightly moist. Water as soon as the foliage starts showing the slightest droop.",
+      "pro_tip": "Snip faded brown blooms with a clean pair of shears right at the base stem to stimulate fresh white blooms.",
+      "common_mistake": "Using hard alkaline tap water. If leaf tips turn yellow, switch to RO or filtered water."
+    }
+  },
+
+  {
+    "id": "monstera_deliciosa",
+    "name": "Monstera Deliciosa",
+    "indian_name": "Swiss Cheese Plant / Cut-Leaf Philodendron",
+    "common_name": "Swiss Cheese Plant",
+    "scientific_name": "Monstera deliciosa",
+    "difficulty": "Easy to Moderate",
+    "category": "Gen Z Aesthetic Icon",
+    "front": {
+      "tagline": "The ultimate Instagram aesthetic icon with natural leaf holes.",
+      "image_url": "/images/monstera.png",
+      "vibe": "Pinterest-ready, tropical, and dramatic",
+      "ideal_spot": "Living room near a balcony glass sliding door"
+    },
+    "story": {
+      "name_origin": "'Monstera' means 'monstrous' in Latin for its massive split leaves; 'Deliciosa' refers to the sweet edible fruit it bears in the jungle.",
+      "cultural_context": "The #1 plant seen in modern Indian aesthetic WFH desk setups, cafe decor, and urban plant parent reels.",
+      "fun_fact": "The natural holes in its leaves (called fenestrations) evolved to let high-speed jungle winds pass through without tearing the leaf!",
+      "symbolism": "Embracing your individuality and reaching for growth."
+    },
+    "care_guide": {
+      "sunlight": "Bright Indirect Light",
+      "sunlight_detail": "Needs plenty of bright light to produce large leaves with fenestrations. Direct sun scorches the foliage.",
+      "watering_frequency_days": 7,
+      "water_amount_ml": 400,
+      "watering_method": "Water thoroughly until it drains out. Allow the top 2 inches of soil to dry out between waterings.",
+      "pro_tip": "Tuck the aerial roots back into the soil pot as they grow to help the plant absorb extra nutrients.",
+      "common_mistake": "Keeping in a dark room; without bright light, new leaves will emerge small with zero split holes."
+    }
+  },
+  {
+    "id": "zz_plant_zanzibar",
+    "name": "ZZ Plant",
+    "indian_name": "ZZ Plant / Zanzibar Gem",
+    "common_name": "Zanzibar Gem",
+    "scientific_name": "Zamioculcas zamiifolia",
+    "difficulty": "Beginner (Gamer / WFH Proof)",
+    "category": "Low-Light Aesthetic",
+    "front": {
+      "tagline": "Mirror-shine black-green leaves with underground water tanks.",
+      "image_url": "/images/zz_plant.png",
+      "vibe": "Sleek, minimalist, and indestructible",
+      "ideal_spot": "Computer desk, bedroom side table, or dim hallway"
+    },
+    "story": {
+      "name_origin": "Short for its botanical name 'Zamioculcas zamiifolia'. The viral 'Raven ZZ' variety turns jet-black as it matures!",
+      "cultural_context": "The holy grail plant for busy Indian techies and students who travel frequently and need zero-maintenance plants.",
+      "fun_fact": "Its glossy mirror finish is 100% natural plant wax. Underground, it has potato-like rhizomes that store water for 4+ weeks of neglect!",
+      "symbolism": "Endurance, silent resilience, and prosperity."
+    },
+    "care_guide": {
+      "sunlight": "Low to Medium Indirect Light",
+      "sunlight_detail": "Thrives under LED room lights or dark rooms. Avoid direct sun which turns the leaves pale and crispy.",
+      "watering_frequency_days": 18,
+      "water_amount_ml": 200,
+      "watering_method": "Water sparingly once every 2.5 to 3 weeks. Soil must be completely dry before watering.",
+      "pro_tip": "Do not spray commercial leaf shine chemicals—just dust the leaves with a dry cloth.",
+      "common_mistake": "Overwatering. Yellow mushy stems are a dead giveaway that it's getting too much love/water."
+    }
+  },
+  {
+    "id": "pink_syngonium",
+    "name": "Pink Syngonium",
+    "indian_name": "Pink Arrowhead / Neon Robusta",
+    "common_name": "Arrowhead Vine",
+    "scientific_name": "Syngonium podophyllum 'Neon Robusta'",
+    "difficulty": "Easy",
+    "category": "Pastel Desk Aesthetic",
+    "front": {
+      "tagline": "Cotton-candy pink arrow leaves that brighten up any study desk.",
+      "image_url": "/images/pink_syngonium.png",
+      "vibe": "Cute, vibrant, and mood-boosting",
+      "ideal_spot": "Study table, work desk, or bookshelf next to a lamp"
+    },
+    "story": {
+      "name_origin": "Named for its distinctive arrow-shaped leaves. The 'Neon' cultivar was bred to produce blush-pink foliage with lime-green undersides.",
+      "cultural_context": "Huge favorite among Gen Z Indian plant collectors looking for pastel colors without dealing with difficult flowers.",
+      "fun_fact": "As the plant matures, its simple arrowhead leaves transform and split into 3-to-5 finger-like lobes!",
+      "symbolism": "Positivity, creative inspiration, and joyful energy."
+    },
+    "care_guide": {
+      "sunlight": "Medium to Bright Indirect Light",
+      "sunlight_detail": "Needs decent indirect light to maintain its vibrant pink color. In low light, the leaves turn plain green.",
+      "watering_frequency_days": 5,
+      "water_amount_ml": 250,
+      "watering_method": "Keep soil slightly moist. Water when the top 1 inch feels dry.",
+      "pro_tip": "Propagate by snipping a stem with a node and placing it in a cute glass test-tube vase on your study desk!",
+      "common_mistake": "Direct scorching sun which bleaches the delicate pink pigmentation into dull grey."
+    }
+  },
+  {
+    "id": "lucky_bamboo",
+    "name": "Lucky Bamboo",
+    "indian_name": "Lucky Bamboo / Feng Shui Stalks",
+    "common_name": "Lucky Bamboo",
+    "scientific_name": "Dracaena sanderiana",
+    "difficulty": "Zero Effort",
+    "category": "Desk & Hostel Staple",
+    "front": {
+      "tagline": "The braided green stalks that bring good luck to your study desk.",
+      "image_url": "/images/lucky_bamboo.png",
+      "vibe": "Zen, minimalist, and peaceful",
+      "ideal_spot": "College hostel desk, office workstation, or dining center"
+    },
+    "story": {
+      "name_origin": "Not actually bamboo! It is a species of *Dracaena* trained into spiral and braided shapes. 3 stalks = Happiness, 5 = Wealth, 6 = Health.",
+      "cultural_context": "The #1 starter plant given to Indian college students and young professionals moving into their first PG/apartment.",
+      "fun_fact": "In Chinese and Indian Feng Shui, Lucky Bamboo represents the balance of all five elements (Earth, Water, Wood, Fire, Metal)!",
+      "symbolism": "Good luck, academic success, and smooth career paths."
+    },
+    "care_guide": {
+      "sunlight": "Low to Bright Filtered Light",
+      "sunlight_detail": "Lives happily under indoor room lights. Never expose to direct sun.",
+      "watering_frequency_days": 7,
+      "water_amount_ml": 150,
+      "watering_method": "If grown in water: keep roots fully submerged in clean RO/filtered water and change water weekly.",
+      "pro_tip": "If stalks turn yellow, it is usually due to chlorine in municipal tap water. Always use drinking RO water.",
+      "common_mistake": "Letting the water dry up completely or placing in front of a cold direct AC air blast."
+    }
+  },
+  {
+    "id": "string_of_pearls",
+    "name": "String of Pearls",
+    "indian_name": "Green Pearl Vine / Senecio",
+    "common_name": "String of Beads",
+    "scientific_name": "Curio rowleyanus",
+    "difficulty": "Moderate",
+    "category": "Boho Hanging Succulent",
+    "front": {
+      "tagline": "Cascading strands of living green pea pearls for macrame hangings.",
+      "image_url": "/images/string_of_pearls.png",
+      "vibe": "Boho, aesthetic, and mesmerizing",
+      "ideal_spot": "Hanging macrame planter on an East-facing balcony"
+    },
+    "story": {
+      "name_origin": "Named for its spherical bead-like leaves that look like a beaded pearl necklace cascading over the pot edge.",
+      "cultural_context": "A viral aesthetic plant across Indian Instagram reels and Pinterest boho room makeovers.",
+      "fun_fact": "The round spherical shape reduces leaf surface area to minimize moisture loss in hot arid climates; each pearl has a translucent 'window' stripe to let sunlight inside!",
+      "symbolism": "Grace, precious memories, and artistic flair."
+    },
+    "care_guide": {
+      "sunlight": "Bright Morning Sun (2-3 Hours) + Bright Indirect Light",
+      "sunlight_detail": "Needs good light on the top of the pot. Direct gentle morning sun keeps the pearls plump and tight.",
+      "watering_frequency_days": 10,
+      "water_amount_ml": 150,
+      "watering_method": "Water from the bottom (submerge pot in water tray for 10 mins) when pearls look slightly puckered.",
+      "pro_tip": "Do not water over the top of the pearls, as trapped moisture between the beads can cause stem rot.",
+      "common_mistake": "Overwatering or planting in non-draining plastic pots without gritty succulent soil."
+    }
+  },
+  {
+    "id": "aglaonema_red_valentine",
+    "name": "Red Valentine Aglaonema",
+    "indian_name": "Chinese Evergreen / Pink Aglaonema",
+    "common_name": "Red Aglaonema",
+    "scientific_name": "Aglaonema 'Red Valentine'",
+    "difficulty": "Easy",
+    "category": "Colorful Living Decor",
+    "front": {
+      "tagline": "Fiery crimson-pink spotted leaves that thrive in air-conditioned rooms.",
+      "image_url": "/images/aglaonema.png",
+      "vibe": "Vibrant, glamorous, and chic",
+      "ideal_spot": "Coffee table, TV unit, or bedroom corner"
+    },
+    "story": {
+      "name_origin": "'Aglaos' (bright/shining) and 'nema' (thread) in Greek. 'Red Valentine' refers to its passionate pink-red mottled foliage.",
+      "cultural_context": "Extremely trendy in contemporary Indian apartment interiors where people want colorful foliage without flowering hassles.",
+      "fun_fact": "Aglaonemas are certified NASA clean-air champions that filter out benzene and formaldehyde emitted by modern furniture and paints!",
+      "symbolism": "Passion, long-lasting joy, and modern elegance."
+    },
+    "care_guide": {
+      "sunlight": "Medium to Bright Indirect Light",
+      "sunlight_detail": "Needs moderate indirect light to keep the intense pink-red splashes bright. Can tolerate low light.",
+      "watering_frequency_days": 7,
+      "water_amount_ml": 300,
+      "watering_method": "Allow the top 2 inches of soil to dry out between waterings. Does not like soggy feet.",
+      "pro_tip": "Tolerates dry air-conditioned room air better than almost any other tropical colorful plant.",
+      "common_mistake": "Placing in harsh direct sunlight which bleaches the bright crimson color to pale white."
+    }
+  },
+  {
+    "id": "fiddle_leaf_fig",
+    "name": "Fiddle Leaf Fig",
+    "indian_name": "Fiddle Leaf / Violin Fig",
+    "common_name": "Fiddle Leaf Fig",
+    "scientific_name": "Ficus lyrata",
+    "difficulty": "Moderate (The Plant Parent Diva)",
+    "category": "Designer Statement Tree",
+    "front": {
+      "tagline": "The architectural giant with giant violin-shaped leather leaves.",
+      "image_url": "/images/fiddle_leaf.png",
+      "vibe": "Architectural, high-fashion, and stately",
+      "ideal_spot": "Living room corner within 3 feet of a large balcony door"
+    },
+    "story": {
+      "name_origin": "Named 'Lyrata' for its stiff, violin-shaped (lyre) leaves with prominent geometric veins.",
+      "cultural_context": "The gold-standard statement plant for upscale Indian urban apartments and aesthetic lifestyle creators.",
+      "fun_fact": "Fiddle Leaf Figs are famous creatures of habit—if you move them to a new room or rotate them abruptly, they drop leaves in protest!",
+      "symbolism": "Sophistication, pride, and personal achievement."
+    },
+    "care_guide": {
+      "sunlight": "Bright, High-Intensity Indirect Sunlight",
+      "sunlight_detail": "Needs generous light to support its massive foliage. Place right next to your brightest window.",
+      "watering_frequency_days": 7,
+      "water_amount_ml": 500,
+      "watering_method": "Water thoroughly until it drains freely out the bottom. Let top 2 inches dry between waterings.",
+      "pro_tip": "Gently shake the main trunk for 30 seconds weekly to mimic outdoor wind—this triggers the trunk to grow thick and sturdy!",
+      "common_mistake": "Drafts from air conditioners and moving it around the house too often."
+    }
+  },
+  {
+    "id": "boston_fern",
+    "name": "Boston Fern",
+    "indian_name": "Sword Fern / Boston Fern",
+    "common_name": "Sword Fern",
+    "scientific_name": "Nephrolepis exaltata",
+    "difficulty": "Moderate",
+    "category": "Bathroom & Balcony Jungle",
+    "front": {
+      "tagline": "Feathery neon-green cascading fronds that love shower steam.",
+      "image_url": "/images/boston_fern.png",
+      "vibe": "Lush, wild, and refreshing",
+      "ideal_spot": "Bathroom window sill, balcony ceiling hanger, or shower ledge"
+    },
+    "story": {
+      "name_origin": "Discovered in 1894 among a shipment of ferns sent to Boston, rapidly becoming the staple Victorian parlor plant.",
+      "cultural_context": "Hugely popular among Indian Gen Z creating 'indoor jungle' bathroom setups and humid balcony greens.",
+      "fun_fact": "Ferns are prehistoric living fossils that evolved over 360 million years ago—predating flowers and dinosaurs!",
+      "symbolism": "New beginnings, sincerity, and pure dreams."
+    },
+    "care_guide": {
+      "sunlight": "Medium Indirect to Dappled Shade",
+      "sunlight_detail": "Prefers gentle filtered light. Direct afternoon sun will instantly crisp up its delicate feather fronds.",
+      "watering_frequency_days": 4,
+      "water_amount_ml": 300,
+      "watering_method": "Keep soil consistently lightly damp like a wrung-out sponge. Never let it dry out completely.",
+      "pro_tip": "Hang it inside your bathroom near a window—it drinks the natural steam from your hot showers!",
+      "common_mistake": "Dry indoor AC air; if fronds shed and turn crispy brown, increase misting immediately."
+    }
+  },
+  {
+    "id": "calathea_rattlesnake",
+    "name": "Rattlesnake Calathea",
+    "indian_name": "Prayer Plant / Rattlesnake Plant",
+    "common_name": "Prayer Plant",
+    "scientific_name": "Goeppertia insignis",
+    "difficulty": "Moderate",
+    "category": "The Living Animation Reel Queen",
+    "front": {
+      "tagline": "Reptile-spotted leaves that fold up to pray every single night.",
+      "image_url": "/images/calathea_rattlesnake.png",
+      "vibe": "Artistic, dynamic, and hypnotic",
+      "ideal_spot": "Bedside table or study desk with gentle indirect light"
+    },
+    "story": {
+      "name_origin": "Named for its wavy, brushstroke-spotted leaves resembling a rattlesnake pattern, with deep royal purple velvet undersides.",
+      "cultural_context": "The favorite subject for Indian plant timelapses on social media due to its dramatic day-to-night leaf movements.",
+      "fun_fact": "Through a process called *nyctinasty*, its leaves spread flat during the day to catch light, then fold vertically straight up at twilight like hands in prayer!",
+      "symbolism": "Gratitude, daily reflection, and mindfulness."
+    },
+    "care_guide": {
+      "sunlight": "Medium Filtered / Dappled Light",
+      "sunlight_detail": "Sensitive to direct sun, which curls the leaf edges and fades the striking purple underside.",
+      "watering_frequency_days": 5,
+      "water_amount_ml": 250,
+      "watering_method": "Keep soil evenly moist. Sensitive to hard tap water salts—always use drinking RO water.",
+      "pro_tip": "Group it close together with other plants to create a natural high-humidity microclimate.",
+      "common_mistake": "Using cold tap water. Use room-temperature RO water to prevent leaf tip browning."
+    }
+  },
+  {
+    "id": "ficus_ginseng_bonsai",
+    "name": "Ginseng Ficus Bonsai",
+    "indian_name": "Banyan Bonsai / Ginseng Ficus",
+    "common_name": "Ginseng Fig Bonsai",
+    "scientific_name": "Ficus microcarpa",
+    "difficulty": "Easy to Moderate",
+    "category": "Zen Workstation Bonsai",
+    "front": {
+      "tagline": "Sculptural exposed roots with a mini canopy for mindful focus.",
+      "image_url": "/images/ginseng_bonsai.png",
+      "vibe": "Zen, disciplined, and grounding",
+      "ideal_spot": "Center of your WFH desk or study table"
+    },
+    "story": {
+      "name_origin": "'Ginseng' refers to the thick, pot-bellied aerial root trunk that resembles the Korean ginseng root.",
+      "cultural_context": "The favorite starter bonsai for young Indian professionals to bring calm, zen vibes and stress relief to desk setups.",
+      "fun_fact": "A cousin of the sacred Indian Banyan tree (*Ficus benghalensis*), it naturally develops miniature aerial roots that drape over its trunk!",
+      "symbolism": "Wisdom, patience, grounding energy, and mental clarity."
+    },
+    "care_guide": {
+      "sunlight": "Bright Indirect to Gentle Morning Sunlight (2-3 Hours)",
+      "sunlight_detail": "Loves plenty of bright light to keep its mini leaf canopy dense and compact.",
+      "watering_frequency_days": 6,
+      "water_amount_ml": 200,
+      "watering_method": "Water thoroughly only when the top layer of bonsai soil feels dry. Never let it sit in standing water.",
+      "pro_tip": "Prune back shoots that grow beyond 4-6 leaves down to 2 leaves to maintain its picturesque miniature tree shape.",
+      "common_mistake": "Low light causing sudden leaf drop, or allowing roots to sit in stagnant saucer water."
+    }
+  },
+  {
+    "id": "rose_desi_gulab",
+    "name": "Rose",
+    "indian_name": "Gulab / Desi Gulab",
+    "common_name": "Rose",
+    "scientific_name": "Rosa indica",
+    "difficulty": "Moderate",
+    "category": "Classic Indian Flowering Plant",
+    "front": {
+      "tagline": "The timeless queen of Indian gardens, from temple offerings to gulkand jars.",
+      "image_url": "/images/rose.png",
+      "vibe": "Romantic, fragrant, and regal",
+      "ideal_spot": "Sunny balcony or terrace with 5-6 hours of direct sun"
+    },
+    "story": {
+      "name_origin": "'Gulab' derives from the Persian 'gul' (flower) and 'aab' (water), literally meaning 'flower water'—a nod to the iconic rose water (gulab jal) distilled from its petals.",
+      "cultural_context": "Integral to Indian culture—petals are scattered in puja thalis, strung into garlands for weddings, and used to make gulkand, rose sharbat, and ittar perfume.",
+      "fun_fact": "Kannauj in Uttar Pradesh has been distilling rose perfume (ittar) for over 500 years using the same ancient 'deg-bhapka' copper-pot method!",
+      "symbolism": "Love, devotion, beauty, and divine offering."
+    },
+    "care_guide": {
+      "sunlight": "Full Direct Sunlight (5-6 Hours)",
+      "sunlight_detail": "Roses are sun-hungry plants. They need at least 5 hours of direct morning sunlight for prolific blooming. Afternoon shade helps in peak Indian summers.",
+      "watering_frequency_days": 2,
+      "water_amount_ml": 500,
+      "watering_method": "Water deeply at the base in the early morning. Avoid wetting the leaves to prevent fungal diseases like black spot and powdery mildew.",
+      "pro_tip": "After each bloom cycle, prune spent flowers just above a 5-leaflet set at a 45-degree angle to encourage rapid re-blooming.",
+      "common_mistake": "Overhead watering that soaks leaves, leading to fungal black spots and powdery mildew in humid Indian weather."
+    }
+  },
+  {
+    "id": "jasmine_mogra",
+    "name": "Mogra (Jasmine)",
+    "indian_name": "Mogra / Motia / Mallige",
+    "common_name": "Arabian Jasmine",
+    "scientific_name": "Jasminum sambac",
+    "difficulty": "Easy to Moderate",
+    "category": "Fragrant Indian Flower",
+    "front": {
+      "tagline": "The intoxicating midnight bloomer that perfumes entire Indian neighborhoods.",
+      "image_url": "/images/mogra.png",
+      "vibe": "Intoxicating, traditional, and heavenly",
+      "ideal_spot": "East or South-facing balcony or terrace with morning sun"
+    },
+    "story": {
+      "name_origin": "'Mogra' comes from the Marathi/Hindi word for its tight, layered bud form. In South India, it is 'Mallige' (Kannada) or 'Malli' (Tamil), woven into women's hair gajras every morning.",
+      "cultural_context": "The soul of Indian evenings—mogra garlands are offered to deities, woven into bridal hair, sold by street vendors at traffic signals, and used to make jasmine attar and gajra strings.",
+      "fun_fact": "Mogra flowers open only at night and release their strongest fragrance between 8 PM and 2 AM, attracting moths for pollination under moonlight!",
+      "symbolism": "Purity, sensuality, divine grace, and marital bliss."
+    },
+    "care_guide": {
+      "sunlight": "Full Direct Sunlight (4-6 Hours)",
+      "sunlight_detail": "Needs abundant direct morning sun to produce heavy blooms. In peak summer, provide light afternoon shade to prevent flower bud drop.",
+      "watering_frequency_days": 2,
+      "water_amount_ml": 400,
+      "watering_method": "Water deeply in the morning until it drains from the pot base. Keep soil consistently moist during the flowering season (April-October).",
+      "pro_tip": "Feed with a handful of mustard cake (sarson ki khali) dissolved in water every 15 days during the blooming season for explosive flower production.",
+      "common_mistake": "Keeping indoors in low light—mogra will survive but refuse to flower without adequate direct sunlight."
+    }
+  }
+]

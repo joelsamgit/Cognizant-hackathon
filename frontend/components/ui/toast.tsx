@@ -1,12 +1,12 @@
 "use client";
 
-import { CheckCircle, Warning, X } from "@phosphor-icons/react";
+import { CheckCircle, Trophy, Warning, X } from "@phosphor-icons/react";
 
 
 export interface ToastMessage {
   id: number;
   message: string;
-  tone: "success" | "error";
+  tone: "success" | "error" | "milestone";
 }
 
 interface ToastViewportProps {
@@ -22,7 +22,7 @@ export function ToastViewport({ toasts, onDismiss }: ToastViewportProps) {
       aria-atomic="false"
     >
       {toasts.map((toast) => {
-        const Icon = toast.tone === "success" ? CheckCircle : Warning;
+        const Icon = toast.tone === "success" ? CheckCircle : toast.tone === "milestone" ? Trophy : Warning;
         return (
           <div
             key={toast.id}
@@ -32,7 +32,7 @@ export function ToastViewport({ toasts, onDismiss }: ToastViewportProps) {
             <Icon
               size={20}
               weight="fill"
-              className={toast.tone === "success" ? "text-[var(--healthy)]" : "text-[var(--risk)]"}
+              className={toast.tone === "success" ? "text-[var(--healthy)]" : toast.tone === "milestone" ? "text-[var(--accent)]" : "text-[var(--risk)]"}
               aria-hidden="true"
             />
             <p className="min-w-0 flex-1 text-sm font-medium leading-5 text-[var(--text)]">
@@ -52,4 +52,3 @@ export function ToastViewport({ toasts, onDismiss }: ToastViewportProps) {
     </div>
   );
 }
-

@@ -43,6 +43,7 @@ STRICT RULES - NEVER VIOLATE:
 6. If notes are empty for a plant, do not mention them.
 7. Use exact values provided - same frequencies, amounts, locations, spots, dates.
 8. Risk level is context only - do not add risk-based advice unless in notes.
+9. Apply the provided season adjustments and pet-handling warnings exactly as supplied.
 
 EXAMPLE:
 Input: vacation_start="2024-06-15T08:00:00", vacation_end="2024-06-22T20:00:00", plants=[{plant_name="Monstera", species="Monstera deliciosa", location="Living Room", specific_spot="Near east window", frequency_days=3, amount_ml=500, last_watered="2024-06-14T10:00:00", notes="Use filtered water"}, {plant_name="Snake Plant", species="Sansevieria", location="Bedroom", specific_spot="Floor by window", frequency_days=7, amount_ml=200, last_watered="2024-06-13T14:00:00", notes=""}], risk_level="medium"
@@ -92,7 +93,9 @@ def build_vacation_user_prompt(
     vacation_end: str,
     plants: list[dict],
     risk_level: str,
-    additional_notes: str = ""
+    additional_notes: str = "",
+    season: str | None = None,
+    season_factor: float | None = None,
 ) -> str:
     plant_lines = []
     for i, p in enumerate(plants, 1):
@@ -104,6 +107,13 @@ def build_vacation_user_prompt(
         ]
         if p.get('notes'):
             lines.append(f"     Notes: {p['notes']}")
+        if p.get('pet_safety') in {'mild', 'toxic'}:
+            lines.append(
+                "     Pet warning: wear gloves, wash hands after touching this plant, "
+                "and keep it away from pets"
+            )
+        if p.get('placement_tip'):
+            lines.append(f"     Placement: {p['placement_tip']}")
         plant_lines.append("\n".join(lines))
     
     notes_line = f"- Additional Notes: {additional_notes}" if additional_notes else ""
@@ -112,7 +122,12 @@ def build_vacation_user_prompt(
         f"- Vacation: {vacation_start} to {vacation_end}",
         f"- Risk Level: {risk_level}",
         f"- Plants ({len(plants)}):",
-    ] + plant_lines
+    ]
+    if season and season_factor:
+        change = round(abs(season_factor - 1) * 100)
+        direction = "less often" if season_factor > 1 else "more often"
+        content.append(f"- Season: {season} — water about {change}% {direction}")
+    content += plant_lines
     
     if notes_line:
         content.append(notes_line)

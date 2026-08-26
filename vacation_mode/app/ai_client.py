@@ -22,7 +22,12 @@ class AIAssistanceClient:
                 "frequency_days": p.frequency_days,
                 "amount_ml": p.amount_ml,
                 "last_watered": p.last_watered.isoformat(),
-                "notes": p.notes or ""
+                "notes": p.notes or "",
+                "base_frequency_days": p.base_frequency_days,
+                "pet_safety": p.pet_safety,
+                "toxic_cats": p.toxic_cats,
+                "toxic_dogs": p.toxic_dogs,
+                "placement_tip": p.placement_tip,
             }
             for p in request.plants
         ]
@@ -32,7 +37,9 @@ class AIAssistanceClient:
             "vacation_end": request.vacation_end.isoformat(),
             "plants": plants_data,
             "risk_level": request.risk_level.value,
-            "additional_notes": request.additional_notes or ""
+            "additional_notes": request.additional_notes or "",
+            "season": request.season,
+            "season_factor": request.season_factor,
         }
 
         try:

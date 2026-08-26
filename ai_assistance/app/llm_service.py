@@ -81,7 +81,12 @@ class GroqLLMService:
                 "frequency_days": p.frequency_days,
                 "amount_ml": p.amount_ml,
                 "last_watered": p.last_watered.isoformat(),
-                "notes": p.notes or ""
+                "notes": p.notes or "",
+                "base_frequency_days": p.base_frequency_days,
+                "pet_safety": p.pet_safety,
+                "toxic_cats": p.toxic_cats,
+                "toxic_dogs": p.toxic_dogs,
+                "placement_tip": p.placement_tip,
             }
             for p in request.plants
         ]
@@ -91,7 +96,9 @@ class GroqLLMService:
             vacation_end=request.vacation_end.isoformat(),
             plants=plants_data,
             risk_level=request.risk_level,
-            additional_notes=request.additional_notes or ""
+            additional_notes=request.additional_notes or "",
+            season=request.season,
+            season_factor=request.season_factor,
         )
 
         response = self.client.chat.completions.create(
@@ -138,6 +145,10 @@ class GroqLLMService:
         start = request.vacation_start.strftime("%B %d")
         end = request.vacation_end.strftime("%B %d")
         parts = [f"From {start} to {end}:"]
+        if request.season and request.season_factor:
+            change = round(abs(request.season_factor - 1) * 100)
+            direction = "less often" if request.season_factor > 1 else "more often"
+            parts.append(f"{request.season} adjustments apply: water about {change}% {direction}.")
         
         for p in request.plants:
             plant_parts = [
@@ -148,6 +159,11 @@ class GroqLLMService:
             if p.notes:
                 plant_parts.append(p.notes)
             parts.append(" ".join(plant_parts) + ".")
+            if p.pet_safety in {"mild", "toxic"}:
+                parts.append(
+                    f"Wear gloves when handling {p.plant_name}, wash hands afterward, "
+                    "and keep it away from pets."
+                )
         
         return " ".join(parts)
 

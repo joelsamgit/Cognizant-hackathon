@@ -26,15 +26,19 @@ def calculate_care_metrics(
     watering_frequency: int,
     *,
     now: datetime | None = None,
+    frequency_override: int | None = None,
 ) -> CareMetrics:
     if watering_frequency <= 0:
+        raise ValueError("watering frequency must be greater than zero")
+    frequency = watering_frequency if frequency_override is None else frequency_override
+    if frequency <= 0:
         raise ValueError("watering frequency must be greater than zero")
 
     current = _as_utc(now or datetime.now(timezone.utc))
     watered = _as_utc(last_watered)
     days_since = max(0, (current.date() - watered.date()).days)
-    days_until_due = watering_frequency - days_since
-    risk_score = min(100, round((days_since / watering_frequency) * 100))
+    days_until_due = frequency - days_since
+    risk_score = min(100, round((days_since / frequency) * 100))
 
     if risk_score < 40:
         status = HEALTHY
@@ -49,4 +53,3 @@ def calculate_care_metrics(
         risk_score=risk_score,
         status=status,
     )
-

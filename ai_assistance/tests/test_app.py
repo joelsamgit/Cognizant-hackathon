@@ -445,6 +445,32 @@ class TestVacationPrompts:
         assert "watering schedule" in VACATION_SYSTEM_PROMPT.lower()
         assert "last watered" in VACATION_SYSTEM_PROMPT.lower()
 
+    def test_vacation_prompt_pet_warning_and_winter_context(self):
+        toxic = {
+            "plant_name": "Greeny",
+            "species": "Golden Pothos",
+            "location": "Living Room",
+            "specific_spot": "High shelf",
+            "frequency_days": 10,
+            "amount_ml": 150,
+            "last_watered": "2026-12-01T10:00:00Z",
+            "notes": "",
+            "pet_safety": "toxic",
+            "placement_tip": "Keep above cat height",
+        }
+        safe = {**toxic, "plant_name": "Pesto", "species": "Sweet Basil", "pet_safety": "safe"}
+        prompt = build_vacation_user_prompt(
+            vacation_start="2026-12-10T10:00:00Z",
+            vacation_end="2026-12-20T10:00:00Z",
+            plants=[toxic, safe],
+            risk_level="high",
+            season="Winter",
+            season_factor=1.4,
+        )
+        assert "Winter" in prompt
+        assert "40% less often" in prompt
+        assert prompt.count("wear gloves") == 1
+
 
 class TestVacationLLMService:
     @pytest.fixture

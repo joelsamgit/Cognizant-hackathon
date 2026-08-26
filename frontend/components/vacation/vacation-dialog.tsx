@@ -66,6 +66,10 @@ export function VacationDialog({ plants, onClose, onNotify }: VacationDialogProp
   );
   const derivedRisk = useMemo(() => deriveRisk(chosenPlants), [chosenPlants]);
   const activeRisk: VacationRiskLevel = riskOverride === "auto" ? derivedRisk : riskOverride;
+  const unsafePlants = chosenPlants.filter((plant) => plant.pet_safety === "mild" || plant.pet_safety === "toxic");
+  const seasonAdjusted = chosenPlants.some(
+    (plant) => plant.effective_watering_frequency !== plant.base_watering_frequency,
+  );
 
   function updateSelection(id: number, patch: Partial<Selection>) {
     setSelections((current) =>
@@ -111,13 +115,23 @@ export function VacationDialog({ plants, onClose, onNotify }: VacationDialogProp
           species: plant.species,
           location: plant.room,
           specific_spot: plant.sunlight,
-          frequency_days: Math.min(plant.watering_frequency, MAX_FREQUENCY_DAYS),
-          amount_ml: Number(selections.find((entry) => entry.id === plant.id)?.amount_ml ?? DEFAULT_AMOUNT_ML),
+          frequency_days: Math.min(plant.effective_watering_frequency, MAX_FREQUENCY_DAYS),
+          base_frequency_days: plant.base_watering_frequency,
+          amount_ml: Math.round(
+            Number(selections.find((entry) => entry.id === plant.id)?.amount_ml ?? DEFAULT_AMOUNT_ML)
+            * Math.max(0.1, 2 - plant.season_factor),
+          ),
           last_watered: plant.last_watered,
           notes: plant.notes,
+          pet_safety: plant.pet_safety,
+          toxic_cats: plant.toxic_cats,
+          toxic_dogs: plant.toxic_dogs,
+          placement_tip: plant.placement_tip,
         })),
         risk_level: activeRisk,
         additional_notes: notes.trim() || null,
+        season: chosenPlants[0]?.season ?? null,
+        season_factor: chosenPlants[0]?.season_factor ?? null,
       });
       setResult(plan);
       onNotify(`Vacation plan ${plan.vacation_id} is ready`);
@@ -281,7 +295,7 @@ export function VacationDialog({ plants, onClose, onNotify }: VacationDialogProp
                         <span className="min-w-0">
                           <span className="block truncate text-sm font-medium text-[var(--text)]">{plant.nickname}</span>
                           <span className="block truncate text-xs text-[var(--text-muted)]">
-                            {plant.room} · every {Math.min(plant.watering_frequency, MAX_FREQUENCY_DAYS)} days
+                            {plant.room} · every {Math.min(plant.effective_watering_frequency, MAX_FREQUENCY_DAYS)} days
                           </span>
                         </span>
                       </label>
@@ -305,6 +319,18 @@ export function VacationDialog({ plants, onClose, onNotify }: VacationDialogProp
                 })}
               </ul>
             </section>
+
+            {unsafePlants.length > 0 && (
+              <div className="rounded-xl bg-[var(--soon-soft)] px-4 py-3 text-sm text-[var(--soon)]" role="note">
+                <strong>Pet handling notice:</strong> wear gloves and wash hands after handling {unsafePlants.map((plant) => plant.nickname).join(", ")}.
+              </div>
+            )}
+
+            {seasonAdjusted && (
+              <p className="text-sm font-semibold text-[var(--accent)]">
+                {chosenPlants[0]?.season} adjustments applied to intervals and water amounts.
+              </p>
+            )}
 
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-semibold text-[var(--text)]">

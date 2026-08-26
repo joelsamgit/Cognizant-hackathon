@@ -1,7 +1,6 @@
-import { PlantDashboard } from "@/components/dashboard/plant-dashboard";
+import { AccountGate } from "@/components/auth/account-gate";
 
 
 export default function Home() {
-  return <PlantDashboard />;
+  return <AccountGate />;
 }
-

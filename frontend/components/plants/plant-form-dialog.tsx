@@ -6,7 +6,7 @@ import { SpinnerGap, X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { toDateTimeLocal, toUtcIso } from "@/lib/dates";
 import type { Plant, PlantPayload, Sunlight } from "@/types/plant";
-import { sunlightOptions } from "@/types/plant";
+import { speciesSuggestions, speciesWateringDefaults, sunlightOptions } from "@/types/plant";
 
 
 interface PlantFormDialogProps {
@@ -78,7 +78,14 @@ export function PlantFormDialog({ plant, saving, error, onSubmit, onClose }: Pla
   }, []);
 
   function setField<K extends keyof FormValues>(field: K, value: FormValues[K]) {
-    setValues((current) => ({ ...current, [field]: value }));
+    setValues((current) => {
+      const next = { ...current, [field]: value };
+      if (field === "species" && !plant) {
+        const defaultDays = speciesWateringDefaults[String(value).trim()];
+        if (defaultDays) next.watering_frequency = String(defaultDays);
+      }
+      return next;
+    });
     setErrors((current) => ({ ...current, [field]: undefined }));
   }
 
@@ -159,7 +166,14 @@ export function PlantFormDialog({ plant, saving, error, onSubmit, onClose }: Pla
                 maxLength={160}
                 aria-invalid={Boolean(errors.species)}
                 placeholder="e.g. Golden Pothos"
+                list="species-suggestions"
+                autoComplete="off"
               />
+              <datalist id="species-suggestions">
+                {speciesSuggestions.map((s) => (
+                  <option key={s} value={s} />
+                ))}
+              </datalist>
             </Field>
 
             <Field label="Room or location" error={errors.room}>
@@ -260,4 +274,3 @@ function Field({
     </label>
   );
 }
-

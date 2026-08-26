@@ -7,6 +7,9 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.core.config import get_settings
 from app.routes.health import router as health_router
+from app.routes.auth import router as auth_router
+from app.routes.notifications import internal_router as notification_internal_router
+from app.routes.notifications import router as notifications_router
 from app.routes.plants import router as plants_router
 
 
@@ -40,5 +43,7 @@ async def database_exception_handler(request: Request, exc: SQLAlchemyError) -> 
 
 
 app.include_router(health_router)
+app.include_router(auth_router, prefix=settings.api_prefix)
 app.include_router(plants_router, prefix=settings.api_prefix)
-
+app.include_router(notifications_router, prefix=settings.api_prefix)
+app.include_router(notification_internal_router)

@@ -9,6 +9,11 @@ export interface VacationPlantInput {
   amount_ml: number;
   last_watered: string;
   notes: string | null;
+  base_frequency_days: number;
+  pet_safety: "safe" | "mild" | "toxic" | null;
+  toxic_cats: boolean | null;
+  toxic_dogs: boolean | null;
+  placement_tip: string | null;
 }
 
 export interface VacationModePayload {
@@ -17,6 +22,8 @@ export interface VacationModePayload {
   plants: VacationPlantInput[];
   risk_level: VacationRiskLevel;
   additional_notes: string | null;
+  season: string | null;
+  season_factor: number | null;
 }
 
 export interface VacationScheduleEntry {
@@ -28,6 +35,11 @@ export interface VacationScheduleEntry {
   amount_ml: number;
   last_watered: string;
   notes: string | null;
+  base_frequency_days: number | null;
+  pet_safety: "safe" | "mild" | "toxic" | null;
+  toxic_cats: boolean | null;
+  toxic_dogs: boolean | null;
+  placement_tip: string | null;
 }
 
 export interface VacationModeResult {

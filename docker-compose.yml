@@ -69,6 +69,19 @@ services:
       APP_ENV: ${APP_ENV:-production}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
       AUTO_SEED: ${AUTO_SEED:-true}
+      SEED_STARTER_PLANTS: ${SEED_STARTER_PLANTS:-false}
+      SESSION_LIFETIME_DAYS: ${SESSION_LIFETIME_DAYS:-7}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:admin@example.com}
+      NOTIFICATION_DISPATCH_TOKEN: ${NOTIFICATION_DISPATCH_TOKEN:-}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID:-}
+      PUBSUB_NOTIFICATION_TOPIC: ${PUBSUB_NOTIFICATION_TOPIC:-}
+      PUBSUB_PUSH_SERVICE_ACCOUNT: ${PUBSUB_PUSH_SERVICE_ACCOUNT:-}
+      PUBSUB_PUSH_AUDIENCE: ${PUBSUB_PUSH_AUDIENCE:-}
+      SCHEDULER_SERVICE_ACCOUNT: ${SCHEDULER_SERVICE_ACCOUNT:-}
+      SCHEDULER_AUDIENCE: ${SCHEDULER_AUDIENCE:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
     depends_on:
       database:
         condition: service_healthy
@@ -92,10 +105,12 @@ services:
       args:
         API_URL: http://backend:8000
         VACATION_API_URL: http://vacation-mode:8001
+        NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-}
     restart: unless-stopped
     environment:
       API_URL: http://backend:8000
       VACATION_API_URL: http://vacation-mode:8001
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-}
     depends_on:
       backend:
         condition: service_healthy
@@ -104,7 +119,7 @@ services:
     ports:
       - "3000:3000"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:3000 || exit 1"]
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000 || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5

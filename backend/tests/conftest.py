@@ -2,6 +2,7 @@ import os
 
 os.environ.setdefault("DATABASE_URL", "sqlite+pysqlite:///:memory:")
 os.environ.setdefault("APP_ENV", "test")
+os.environ.setdefault("SEED_STARTER_PLANTS", "false")
 
 import pytest
 from fastapi.testclient import TestClient
@@ -32,7 +33,7 @@ def db_session() -> Session:
 
 
 @pytest.fixture
-def client(db_session: Session) -> TestClient:
+def anonymous_client(db_session: Session) -> TestClient:
     def override_get_db():
         yield db_session
 
@@ -41,3 +42,19 @@ def client(db_session: Session) -> TestClient:
         yield test_client
     app.dependency_overrides.clear()
 
+
+@pytest.fixture
+def client(anonymous_client: TestClient) -> TestClient:
+    response = anonymous_client.post(
+        "/api/auth/signup",
+        json={
+            "email": "gardener@example.com",
+            "password": "a-secure-password",
+            "full_name": "Test Gardener",
+            "place": "Bengaluru",
+            "pets": ["No pets"],
+            "timezone": "UTC",
+        },
+    )
+    assert response.status_code == 201
+    return anonymous_client
