@@ -1,0 +1,27 @@
+steps:
+  - id: backend-tests
+    name: python:3.13-slim
+    dir: backend
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        pip install --disable-pip-version-check --no-cache-dir -r requirements-dev.txt
+        DATABASE_URL=sqlite+pysqlite:///:memory: python -m pytest -q
+
+  - id: frontend-quality
+    name: node:22-alpine
+    dir: frontend
+    entrypoint: sh
+    args:
+      - -ceu
+      - |
+        npm ci
+        npm test
+        npm run lint
+        npm run build
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1200s

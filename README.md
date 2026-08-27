@@ -363,3 +363,14 @@ GROQ_API_KEY=gsk_your_key \
 See [DEPLOY_GCP.md](DEPLOY_GCP.md) for the architecture, manual steps, redeploying a
 single service, teardown, and cost notes.
 
+## CI/CD
+
+The repository includes Google Cloud Build pipelines for pull-request validation and
+automatic deployment from `main`. Pull requests run backend tests plus frontend tests,
+lint, and a production build. Path-filtered deployment triggers build and update only
+the services changed by a successful merge, without recreating the database or supporting
+GCP resources.
+
+See [CI_CD_SETUP.md](CI_CD_SETUP.md) for the one-time GitHub connection, trigger setup,
+permissions, daily workflow, and monitoring instructions.
+

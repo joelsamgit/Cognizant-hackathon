@@ -1,0 +1,53 @@
+substitutions:
+  _REGION: asia-south1
+  _REPOSITORY: plant-guardian
+  _SERVICE: backend
+  _CONTEXT: backend
+
+steps:
+  - id: tests
+    name: python:3.13-slim
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        pip install --disable-pip-version-check --no-cache-dir -r "${_CONTEXT}/requirements.txt"
+        if [[ -f "${_CONTEXT}/requirements-dev.txt" ]]; then
+          pip install --disable-pip-version-check --no-cache-dir -r "${_CONTEXT}/requirements-dev.txt"
+        fi
+        cd "${_CONTEXT}"
+        DATABASE_URL=sqlite+pysqlite:///:memory: python -m pytest -q
+
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    waitFor: [tests]
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$SHORT_SHA
+      - ./${_CONTEXT}
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    waitFor: [build]
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$SHORT_SHA
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    waitFor: [push]
+    entrypoint: gcloud
+    args:
+      - run
+      - services
+      - update
+      - ${_SERVICE}
+      - --region=${_REGION}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$SHORT_SHA
+      - --quiet
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1800s
