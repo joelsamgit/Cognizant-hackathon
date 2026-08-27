@@ -13,7 +13,7 @@ The deployment pipeline updates only container images. It does not recreate or d
 
 1. Push these CI/CD files to the GitHub repository.
 2. Open Google Cloud Console, select `gcp-hackathon-506604`, and navigate to **Cloud Build > Triggers**.
-3. Click **Connect repository**, choose GitHub, authorize Google Cloud Build, and connect `joelsamgit/Cognizant-hackathon`.
+3. Set the trigger region to **Global**, click **Connect repository**, choose GitHub, authorize Google Cloud Build, and connect `joelsamgit/Cognizant-hackathon`.
 4. Ensure `.env` contains `GCP_PROJECT_ID`, `GCP_REGION`, and the Google OAuth client ID.
 5. From Git Bash in the project directory, run:
 
@@ -43,7 +43,7 @@ Open **Google Cloud Console > Cloud Build > History**. Select a build to see eac
 To inspect the triggers from the CLI:
 
 ```bash
-gcloud builds triggers list --region=asia-south1
+gcloud builds triggers list --region=global
 ```
 
 To inspect deployed revisions:

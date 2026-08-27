@@ -12,6 +12,7 @@ fi
 
 PROJECT_ID="${GCP_PROJECT_ID:-$(gcloud config get-value project 2>/dev/null)}"
 REGION="${GCP_REGION:-asia-south1}"
+TRIGGER_REGION="${GCP_TRIGGER_REGION:-global}"
 GITHUB_OWNER="${GITHUB_OWNER:-joelsamgit}"
 GITHUB_REPOSITORY="${GITHUB_REPOSITORY:-Cognizant-hackathon}"
 CICD_SERVICE_ACCOUNT_NAME="plant-guardian-cicd"
@@ -43,13 +44,13 @@ done
 create_trigger() {
   local name="$1"
   shift
-  if gcloud builds triggers describe "${name}" --region="${REGION}" >/dev/null 2>&1; then
+  if gcloud builds triggers describe "${name}" --region="${TRIGGER_REGION}" >/dev/null 2>&1; then
     echo "${name} already exists"
     return
   fi
   gcloud builds triggers create github \
     --name="${name}" \
-    --region="${REGION}" \
+    --region="${TRIGGER_REGION}" \
     --repo-owner="${GITHUB_OWNER}" \
     --repo-name="${GITHUB_REPOSITORY}" \
     --service-account="projects/${PROJECT_ID}/serviceAccounts/${CICD_SERVICE_ACCOUNT}" \
@@ -85,4 +86,4 @@ create_trigger plant-guardian-frontend-deploy \
   --included-files="frontend/**,deploy/cloudbuild-frontend-deploy.yaml" \
   --substitutions="_REGION=${REGION},_REPOSITORY=plant-guardian,_BACKEND_URL=https://backend-845145311784.${REGION}.run.app,_VACATION_API_URL=https://vacation-mode-845145311784.${REGION}.run.app,_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID_VALUE}"
 
-echo "Path-filtered CI/CD triggers are configured for ${GITHUB_OWNER}/${GITHUB_REPOSITORY}."
+echo "Path-filtered CI/CD triggers are configured for ${GITHUB_OWNER}/${GITHUB_REPOSITORY} in ${TRIGGER_REGION}."
