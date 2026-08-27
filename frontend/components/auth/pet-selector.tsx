@@ -31,7 +31,7 @@ export function PetSelector({ value, onChange, error }: PetSelectorProps) {
         Pets in your home
       </legend>
       <p className="text-xs leading-5 text-[var(--text-soft)]">
-        This keeps future care guidance mindful of curious paws, feathers, and fins.
+        Select each pet type in your home so plant warnings can address them directly.
       </p>
       <div className="mt-1 flex flex-wrap gap-2">
         {petOptions.map((option) => {

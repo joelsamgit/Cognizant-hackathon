@@ -201,7 +201,7 @@ export function NotificationSettings({ onNotify }: NotificationSettingsProps) {
             <h2 className="text-sm font-bold text-[var(--text)]">Daily care reminders</h2>
             <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
               {subscription
-                ? "This browser will notify you about plants due for a soil check."
+                ? "This browser will notify you when a plant needs water soon or is overdue."
                 : "Enable notifications for due and overdue plants, even when the dashboard is closed."}
             </p>
           </div>

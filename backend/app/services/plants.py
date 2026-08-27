@@ -90,7 +90,8 @@ def to_response(
         now=current,
         frequency_override=effective,
     )
-    watering_locked = metrics.days_since_watered < effective
+    watering_cooldown = max(1, (effective + 1) // 2)
+    watering_locked = metrics.days_since_watered < watering_cooldown
     records = waterings if waterings is not None else list(plant.waterings)
     stats = gamification_stats(records, effective, current)
     mood = (
@@ -134,7 +135,10 @@ def to_response(
             "effective_watering_frequency": effective,
             "season_factor": context.factor,
             "watering_locked": watering_locked,
-            "next_watering_in_days": max(0, effective - metrics.days_since_watered),
+            "next_watering_in_days": max(
+                0,
+                watering_cooldown - metrics.days_since_watered,
+            ),
             **metrics.__dict__,
         }
     )

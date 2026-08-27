@@ -18,11 +18,14 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { formatLastWatered, formatNextWatering } from "@/lib/dates";
+import { buildPetSafetyMessage } from "@/lib/pet-safety";
 import type { Plant, PlantStatus } from "@/types/plant";
+import type { PetType } from "@/types/user";
 
 
 interface SummaryFaceProps {
   plant: Plant;
+  userPets: PetType[];
   watering: boolean;
   onWater: (plant: Plant) => void;
   onEdit: (plant: Plant) => void;
@@ -31,19 +34,16 @@ interface SummaryFaceProps {
   xpGain?: { amount: number; key: number };
 }
 
-const statusStyles: Record<PlantStatus, { badge: string; bar: string; score: string }> = {
+const statusStyles: Record<PlantStatus, { bar: string; score: string }> = {
   Healthy: {
-    badge: "bg-[var(--healthy-soft)] text-[var(--healthy)]",
     bar: "bg-[var(--healthy)]",
     score: "text-[var(--healthy)]",
   },
   "Needs Water Soon": {
-    badge: "bg-[var(--soon-soft)] text-[var(--soon)]",
     bar: "bg-[var(--soon)]",
     score: "text-[var(--soon)]",
   },
   "Overdue / High Risk": {
-    badge: "bg-[var(--risk-soft)] text-[var(--risk)]",
     bar: "bg-[var(--risk)]",
     score: "text-[var(--risk)]",
   },
@@ -51,6 +51,7 @@ const statusStyles: Record<PlantStatus, { badge: string; bar: string; score: str
 
 export function CareSummaryFace({
   plant,
+  userPets,
   watering,
   onWater,
   onEdit,
@@ -75,12 +76,7 @@ export function CareSummaryFace({
           <p className="mt-1 truncate text-sm font-medium text-[var(--text-muted)]">{plant.species}</p>
             </div>
           </div>
-          <div className="flex shrink-0 flex-col items-end gap-2">
-            <span className={`rounded-full px-3 py-1.5 text-[11px] font-bold ${styles.badge}`}>
-              {plant.status}
-            </span>
-            <PetSafetyBadge plant={plant} />
-          </div>
+          <PetSafetyBadge plant={plant} userPets={userPets} />
         </div>
       </header>
 
@@ -193,13 +189,24 @@ export function CareSummaryFace({
   );
 }
 
-function PetSafetyBadge({ plant }: { plant: Plant }) {
+function PetSafetyBadge({ plant, userPets }: { plant: Plant; userPets: PetType[] }) {
   if (!plant.pet_safety) return null;
-  const label = plant.pet_safety === "safe" ? "Pet-safe" : plant.pet_safety === "mild" ? "Mild" : "Toxic";
-  const color = plant.pet_safety === "safe" ? "text-[var(--healthy)] bg-[var(--healthy-soft)]" : plant.pet_safety === "mild" ? "text-[var(--soon)] bg-[var(--soon-soft)]" : "text-[var(--risk)] bg-[var(--risk-soft)]";
+  const label =
+    plant.pet_safety === "safe" ? "Pet-safe" : plant.pet_safety === "mild" ? "Mild" : "Toxic";
+  const color =
+    plant.pet_safety === "safe"
+      ? "text-[var(--healthy)] bg-[var(--healthy-soft)]"
+      : plant.pet_safety === "mild"
+        ? "text-[var(--soon)] bg-[var(--soon-soft)]"
+        : "text-[var(--risk)] bg-[var(--risk-soft)]";
   const Icon = plant.pet_safety === "mild" ? WarningCircle : PawPrint;
+  const petMessage = buildPetSafetyMessage(plant, userPets);
   return (
-    <span title={plant.placement_tip ?? undefined} className={`flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-bold ${color}`}>
+    <span
+      title={petMessage}
+      aria-label={`${label}. ${petMessage ?? ""}`.trim()}
+      className={`flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-[10px] font-bold ${color}`}
+    >
       <Icon size={12} weight="fill" aria-hidden="true" />
       {label}
     </span>

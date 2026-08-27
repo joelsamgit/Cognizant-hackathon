@@ -6,7 +6,7 @@ import { AirplaneTakeoff, CheckCircle, Copy, SpinnerGap, X } from "@phosphor-ico
 import { Button } from "@/components/ui/button";
 import { toDateTimeLocal, toUtcIso } from "@/lib/dates";
 import { ApiError } from "@/services/plants";
-import { createVacationPlan } from "@/services/vacation";
+import { createVacationPlan, getGmailComposeUrl, validateVacationWindow } from "@/services/vacation";
 import type { VacationModeResult, VacationRiskLevel } from "@/types/vacation";
 import type { Plant } from "@/types/plant";
 
@@ -85,12 +85,9 @@ export function VacationDialog({ plants, onClose, onNotify }: VacationDialogProp
   async function handleGenerate() {
     setFormError(null);
 
-    if (!start || !end) {
-      setFormError("Choose both the departure and return dates.");
-      return;
-    }
-    if (new Date(end).getTime() <= new Date(start).getTime()) {
-      setFormError("The return date must be after the departure date.");
+    const dateError = validateVacationWindow(start, end);
+    if (dateError) {
+      setFormError(dateError);
       return;
     }
     if (chosenPlants.length === 0) {
@@ -211,12 +208,29 @@ export function VacationDialog({ plants, onClose, onNotify }: VacationDialogProp
 
             {result.caretaker_message && (
               <section aria-label="Caretaker message" className="rounded-xl border border-[var(--line)] bg-[var(--surface-raised)] p-4">
-                <div className="mb-3 flex items-center justify-between gap-2">
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                   <h3 className="text-sm font-bold uppercase tracking-wide text-[var(--text-muted)]">Caretaker message</h3>
-                  <Button variant="secondary" size="sm" onClick={() => void copyMessage()}>
-                    <Copy size={16} aria-hidden="true" />
-                    {copied ? "Copied" : "Copy"}
-                  </Button>
+                  <div className="flex flex-wrap gap-2">
+                    <Button variant="secondary" size="sm" onClick={() => void copyMessage()}>
+                      <Copy size={16} aria-hidden="true" />
+                      {copied ? "Copied" : "Copy"}
+                    </Button>
+                    <a
+                      href={getGmailComposeUrl()}
+                      target="_blank"
+                      rel="noreferrer"
+                      title="Open Gmail to share this briefing"
+                      aria-label="Open Gmail to share this briefing"
+                      className="inline-flex min-h-9 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[var(--line-strong)] bg-[var(--surface-raised)] px-3 text-sm font-semibold text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                    >
+                      <svg viewBox="0 0 24 24" className="size-[18px]" aria-hidden="true">
+                        <path fill="#EA4335" d="M3 5.5 12 12l9-6.5A2.5 2.5 0 0 0 19 4H5a2.5 2.5 0 0 0-2 1.5Z" />
+                        <path fill="#4285F4" d="M3 5.5V18a2 2 0 0 0 2 2h3V10.5L3 5.5Z" />
+                        <path fill="#34A853" d="M21 5.5V18a2 2 0 0 1-2 2h-3v-9.5l5-5Z" />
+                        <path fill="#FBBC04" d="M8 10.5V20h8v-9.5l-4 2.9-4-2.9Z" />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
                 <p className="whitespace-pre-line text-sm leading-6 text-[var(--text)]">{result.caretaker_message}</p>
               </section>
@@ -255,7 +269,6 @@ export function VacationDialog({ plants, onClose, onNotify }: VacationDialogProp
                   autoFocus
                   type="datetime-local"
                   value={start}
-                  max={toDateTimeLocal()}
                   onChange={(event) => setStart(event.target.value)}
                   className={inputClass}
                 />

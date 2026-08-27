@@ -12,13 +12,15 @@ import {
   PlantProfileFace,
 } from "@/components/plants/plant-card-faces";
 import { Button } from "@/components/ui/button";
-import type { Plant } from "@/types/plant";
+import type { Plant, PlantStatus } from "@/types/plant";
+import type { PetType } from "@/types/user";
 
 
 gsap.registerPlugin(useGSAP);
 
 interface PlantCardProps {
   plant: Plant;
+  userPets: PetType[];
   watering: boolean;
   onWater: (plant: Plant) => void;
   onEdit: (plant: Plant) => void;
@@ -31,6 +33,29 @@ type CardFace = 0 | 1 | 2;
 
 const faceLabels = ["Care status", "Plant profile", "Growing guide"] as const;
 const nextLabels = ["Plant details", "Care guide", "Care status"] as const;
+const cardStatusStyles: Record<
+  PlantStatus,
+  { label: string; message: string; color: string; soft: string }
+> = {
+  Healthy: {
+    label: "Healthy",
+    message: "Care is on track",
+    color: "var(--healthy)",
+    soft: "var(--healthy-soft)",
+  },
+  "Needs Water Soon": {
+    label: "Needs water soon",
+    message: "Plan the next watering",
+    color: "var(--soon)",
+    soft: "var(--soon-soft)",
+  },
+  "Overdue / High Risk": {
+    label: "Overdue",
+    message: "Watering needs attention",
+    color: "var(--risk)",
+    soft: "var(--risk-soft)",
+  },
+};
 const faceIcons = [
   <Leaf key="care" size={16} weight="fill" aria-hidden="true" />,
   <Sparkle key="profile" size={16} weight="fill" aria-hidden="true" />,
@@ -39,6 +64,7 @@ const faceIcons = [
 
 export function PlantCard(props: PlantCardProps) {
   const { plant } = props;
+  const statusStyle = cardStatusStyles[plant.status];
   const cardRef = useRef<HTMLElement>(null);
   const faceRef = useRef<HTMLDivElement>(null);
   const [face, setFace] = useState<CardFace>(0);
@@ -126,7 +152,20 @@ export function PlantCard(props: PlantCardProps) {
       aria-busy={animating}
       aria-roledescription="three-stage plant card"
       className="group flex min-h-full flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)] shadow-[0_14px_38px_rgba(31,96,61,0.055)] transition-[border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:shadow-[var(--shadow)]"
+      style={{
+        borderColor: `color-mix(in srgb, ${statusStyle.color} 48%, var(--line))`,
+        backgroundColor: `color-mix(in srgb, ${statusStyle.soft} 46%, var(--surface))`,
+      }}
     >
+      <div
+        className="flex min-h-10 items-center justify-between gap-3 px-5 py-2 text-xs font-bold sm:px-6"
+        style={{ backgroundColor: statusStyle.soft, color: statusStyle.color }}
+        role="status"
+        aria-label={`${plant.nickname} is ${statusStyle.label}`}
+      >
+        <span>{statusStyle.label}</span>
+        <span className="font-semibold opacity-80">{statusStyle.message}</span>
+      </div>
       <div
         ref={faceRef}
         className={`flex-1 [backface-visibility:hidden] ${animating ? "pointer-events-none" : ""}`}

@@ -58,6 +58,42 @@ def test_create_validation(client: TestClient):
     assert response.status_code == 422
 
 
+def test_watering_button_unlocks_after_half_the_effective_interval(client: TestClient):
+    just_watered = client.post(
+        "/api/plants?season=post-monsoon",
+        json=plant_payload(
+            nickname="Freshly Watered",
+            last_watered=datetime.now(timezone.utc).isoformat(),
+        ),
+    )
+    assert just_watered.status_code == 201
+    assert just_watered.json()["watering_locked"] is True
+    assert just_watered.json()["next_watering_in_days"] == 4
+
+    unlocked = client.post(
+        "/api/plants?season=post-monsoon",
+        json=plant_payload(
+            nickname="Ready Again",
+            last_watered=(datetime.now(timezone.utc) - timedelta(days=4)).isoformat(),
+        ),
+    )
+    assert unlocked.status_code == 201
+    assert unlocked.json()["watering_locked"] is False
+    assert unlocked.json()["next_watering_in_days"] == 0
+
+    odd_frequency = client.post(
+        "/api/plants?season=post-monsoon",
+        json=plant_payload(
+            nickname="Three Day Plant",
+            watering_frequency=3,
+            last_watered=(datetime.now(timezone.utc) - timedelta(days=1)).isoformat(),
+        ),
+    )
+    assert odd_frequency.status_code == 201
+    assert odd_frequency.json()["watering_locked"] is True
+    assert odd_frequency.json()["next_watering_in_days"] == 1
+
+
 def test_structured_profile_and_care_guide_round_trip(client: TestClient):
     response = client.post(
         "/api/plants",

@@ -4,7 +4,7 @@ import json
 import logging
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timezone
 from typing import Literal
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
@@ -17,7 +17,7 @@ from app.core.config import Settings
 from app.models.notification import NotificationDelivery, PushSubscription
 from app.models.plant import Plant
 from app.schemas.notification import NotificationRequestedEvent, PushSubscriptionCreate
-from app.services.risk import calculate_care_metrics
+from app.services.risk import HIGH_RISK, NEEDS_WATER_SOON, calculate_care_metrics
 
 
 logger = logging.getLogger(__name__)
@@ -107,7 +107,7 @@ def send_test_notification(
             subscription,
             {
                 "title": "Plant Guardian reminders are ready",
-                "body": "You will be notified when a plant is due for a care check.",
+                "body": "You will be notified when a plant needs water soon or is overdue.",
                 "tag": "plant-guardian-test",
                 "url": "/",
             },
@@ -156,9 +156,7 @@ def dispatch_due_notifications(
 
     for subscription in subscriptions:
         local_now = _local_time(current, subscription.timezone)
-        if not _is_delivery_window(local_now, subscription.reminder_time):
-            continue
-        delivery_date = _scheduled_delivery_date(local_now, subscription.reminder_time)
+        delivery_date = local_now.date()
 
         for plant in plants_by_user.get(subscription.user_id, []):
             metrics = calculate_care_metrics(
@@ -166,10 +164,10 @@ def dispatch_due_notifications(
                 plant.watering_frequency,
                 now=current,
             )
-            if metrics.days_until_due > 0:
+            if metrics.status not in {NEEDS_WATER_SOON, HIGH_RISK}:
                 continue
 
-            kind = "due" if metrics.days_until_due == 0 else "overdue"
+            kind = "overdue" if metrics.status == HIGH_RISK else "soon"
             delivery = db.scalar(
                 select(NotificationDelivery).where(
                     NotificationDelivery.subscription_id == subscription.id,
@@ -304,7 +302,7 @@ def deliver_queued_notification(
         plant.watering_frequency,
         now=current,
     )
-    if metrics.days_until_due > 0:
+    if metrics.status not in {NEEDS_WATER_SOON, HIGH_RISK}:
         delivery.status = "cancelled"
         db.commit()
         return "cancelled"
@@ -343,9 +341,9 @@ def deliver_queued_notification(
 
 
 def _notification_payload(plant: Plant, days_until_due: int, care_date: str) -> dict[str, str]:
-    if days_until_due == 0:
-        body = f"Its usual {plant.watering_frequency}-day care window is due today."
-        title = f"{plant.nickname} needs a soil check"
+    if days_until_due > 0:
+        body = f"Water it within {days_until_due} {('day' if days_until_due == 1 else 'days')} to keep it healthy."
+        title = f"{plant.nickname} needs water soon"
     else:
         overdue = abs(days_until_due)
         unit = "day" if overdue == 1 else "days"
@@ -401,22 +399,6 @@ def _local_time(now: datetime, timezone_name: str) -> datetime:
         return now.astimezone(ZoneInfo(timezone_name))
     except ZoneInfoNotFoundError:
         return now
-
-
-def _is_delivery_window(local_now: datetime, reminder_time: str) -> bool:
-    hour, minute = (int(part) for part in reminder_time.split(":"))
-    scheduled_minutes = hour * 60 + minute
-    current_minutes = local_now.hour * 60 + local_now.minute
-    return (current_minutes - scheduled_minutes) % (24 * 60) < 15
-
-
-def _scheduled_delivery_date(local_now: datetime, reminder_time: str) -> date:
-    hour, minute = (int(part) for part in reminder_time.split(":"))
-    scheduled_minutes = hour * 60 + minute
-    current_minutes = local_now.hour * 60 + local_now.minute
-    if current_minutes < scheduled_minutes:
-        return local_now.date() - timedelta(days=1)
-    return local_now.date()
 
 
 def _as_utc(value: datetime) -> datetime:

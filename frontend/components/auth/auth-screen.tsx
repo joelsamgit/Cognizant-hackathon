@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   CheckCircle,
   Leaf,
@@ -49,16 +49,98 @@ export function AuthScreen({ onAuthenticated, initialError }: AuthScreenProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState(initialError ?? "");
   const [submitting, setSubmitting] = useState(false);
+  const [googleReady, setGoogleReady] = useState(false);
+  const googleButtonRef = useRef<HTMLDivElement>(null);
+  const modeRef = useRef(mode);
+  const valuesRef = useRef(values);
 
   useEffect(() => {
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    if (!clientId || document.querySelector('script[src="https://accounts.google.com/gsi/client"]')) return;
+    modeRef.current = mode;
+    valuesRef.current = values;
+  }, [mode, values]);
+
+  const handleGoogleCredential = useCallback(
+    async ({ credential }: { credential: string }) => {
+      const currentMode = modeRef.current;
+      const currentValues = valuesRef.current;
+      if (currentMode === "signup") {
+        const nextErrors: Record<string, string> = {};
+        if (currentValues.fullName.trim().length < 2) nextErrors.fullName = "Enter your name first.";
+        if (currentValues.place.trim().length < 2) nextErrors.place = "Enter your city or place first.";
+        if (!currentValues.pets.length) nextErrors.pets = "Choose your pets first.";
+        if (Object.keys(nextErrors).length) {
+          setErrors(nextErrors);
+          return;
+        }
+      }
+
+      setSubmitting(true);
+      setServerError("");
+      try {
+        const user = await googleAuth({
+          credential,
+          ...(currentMode === "signup"
+            ? {
+                full_name: currentValues.fullName.trim(),
+                place: currentValues.place.trim(),
+                pets: currentValues.pets,
+              }
+            : {}),
+        });
+        onAuthenticated(user);
+      } catch (error) {
+        setServerError(
+          error instanceof ApiError ? error.message : "Google sign-in could not be completed.",
+        );
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [onAuthenticated],
+  );
+
+  useEffect(() => {
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "";
+    if (!clientId) return;
+
+    function setupGoogleButton() {
+      const google = (window as Window & { google?: GoogleAccounts }).google;
+      if (!google?.accounts?.id || !googleButtonRef.current) return;
+      google.accounts.id.initialize({
+        client_id: clientId,
+        callback: (response) => void handleGoogleCredential(response),
+      });
+      googleButtonRef.current.innerHTML = "";
+      google.accounts.id.renderButton(googleButtonRef.current, {
+        theme: "outline",
+        size: "large",
+        text: "continue_with",
+        shape: "pill",
+        width: "100%",
+      });
+      setGoogleReady(true);
+    }
+
+    const existingScript = document.querySelector(
+      'script[src="https://accounts.google.com/gsi/client"]',
+    );
+    if (existingScript) {
+      if ((window as Window & { google?: GoogleAccounts }).google?.accounts?.id) {
+        setupGoogleButton();
+      } else {
+        existingScript.addEventListener("load", setupGoogleButton);
+      }
+      return () => existingScript.removeEventListener("load", setupGoogleButton);
+    }
+
     const script = document.createElement("script");
     script.src = "https://accounts.google.com/gsi/client";
     script.async = true;
     script.defer = true;
+    script.addEventListener("load", setupGoogleButton);
     document.head.appendChild(script);
-  }, []);
+    return () => script.removeEventListener("load", setupGoogleButton);
+  }, [handleGoogleCredential]);
 
   function switchMode(nextMode: Mode) {
     setMode(nextMode);
@@ -118,45 +200,6 @@ export function AuthScreen({ onAuthenticated, initialError }: AuthScreenProps) {
     } finally {
       setSubmitting(false);
     }
-  }
-
-  function handleGoogle() {
-    if (mode === "signup") {
-      const nextErrors: Record<string, string> = {};
-      if (values.fullName.trim().length < 2) nextErrors.fullName = "Enter your name first.";
-      if (values.place.trim().length < 2) nextErrors.place = "Enter your city or place first.";
-      if (!values.pets.length) nextErrors.pets = "Choose your pets first.";
-      if (Object.keys(nextErrors).length) {
-        setErrors(nextErrors);
-        return;
-      }
-    }
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    const google = (window as Window & { google?: GoogleAccounts }).google;
-    if (!clientId || !google?.accounts?.id) {
-      setServerError("Google sign-in is not configured yet. Add NEXT_PUBLIC_GOOGLE_CLIENT_ID to the frontend environment.");
-      return;
-    }
-    setSubmitting(true);
-    google.accounts.id.initialize({
-      client_id: clientId,
-      callback: async ({ credential }) => {
-        try {
-          const user = await googleAuth({
-            credential,
-            ...(mode === "signup"
-              ? { full_name: values.fullName.trim(), place: values.place.trim(), pets: values.pets }
-              : {}),
-          });
-          onAuthenticated(user);
-        } catch (error) {
-          setServerError(error instanceof ApiError ? error.message : "Google sign-in could not be completed.");
-        } finally {
-          setSubmitting(false);
-        }
-      },
-    });
-    google.accounts.id.prompt(() => setSubmitting(false));
   }
 
   return (
@@ -234,15 +277,27 @@ export function AuthScreen({ onAuthenticated, initialError }: AuthScreenProps) {
             ))}
           </div>
 
-          <button
-            type="button"
-            onClick={handleGoogle}
-            disabled={submitting}
-            className="mt-5 flex min-h-12 w-full items-center justify-center gap-3 rounded-xl border border-[var(--line-strong)] bg-[var(--surface-raised)] px-4 text-sm font-bold text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            <span className="text-lg font-black text-[var(--healthy)]">G</span>
-            Continue with Google
-          </button>
+          <div
+            ref={googleButtonRef}
+            className={`mt-5 flex min-h-12 w-full justify-center overflow-hidden rounded-xl ${googleReady ? "" : "hidden"}`}
+            aria-label="Continue with Google"
+          />
+          {!googleReady && (
+            <button
+              type="button"
+              onClick={() =>
+                setServerError(
+                  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+                    ? "Google sign-in is still loading. Please try again in a moment."
+                    : "Google sign-in is not configured yet. Add NEXT_PUBLIC_GOOGLE_CLIENT_ID to the frontend environment.",
+                )
+              }
+              className="mt-5 flex min-h-12 w-full items-center justify-center gap-3 rounded-xl border border-[var(--line-strong)] bg-[var(--surface-raised)] px-4 text-sm font-bold text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)]"
+            >
+              <span className="text-lg font-black text-[var(--healthy)]">G</span>
+              Continue with Google
+            </button>
+          )}
           <div className="mt-5 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-soft)]"><span className="h-px flex-1 bg-[var(--line)]" />or use email<span className="h-px flex-1 bg-[var(--line)]" /></div>
 
           <form className="mt-6 grid gap-4" onSubmit={handleSubmit} noValidate>
@@ -339,8 +394,20 @@ export function AuthScreen({ onAuthenticated, initialError }: AuthScreenProps) {
 interface GoogleAccounts {
   accounts: {
     id: {
-      initialize: (options: { client_id: string; callback: (response: { credential: string }) => void }) => void;
-      prompt: (listener?: () => void) => void;
+      initialize: (options: {
+        client_id: string;
+        callback: (response: { credential: string }) => void;
+      }) => void;
+      renderButton: (
+        parent: HTMLElement,
+        options: {
+          theme: "outline";
+          size: "large";
+          text: "continue_with";
+          shape: "pill";
+          width: string;
+        },
+      ) => void;
     };
   };
 }

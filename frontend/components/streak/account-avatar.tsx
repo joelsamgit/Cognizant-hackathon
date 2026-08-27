@@ -12,15 +12,15 @@ export function AccountAvatar({ user }: { user: UserProfile }) {
   const mood = user.account_mood ?? "happy";
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div className="fixed bottom-10 right-10 z-50">
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="group flex size-14 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--accent)_35%,var(--line))] bg-[var(--accent-soft)] shadow-[0_8px_26px_rgba(31,96,61,0.16)] transition-transform duration-200 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+        className="group flex size-[5.25rem] items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--accent)_35%,var(--line))] bg-[var(--accent-soft)] shadow-[0_8px_26px_rgba(31,96,61,0.16)] transition-transform duration-200 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
         aria-label="Open your growth avatar"
         aria-expanded={open}
       >
-        <PlantAvatar stage={stage} mood={mood} size={44} />
+        <PlantAvatar stage={stage} mood={mood} size={66} />
       </button>
       {open && (
         <div className="absolute bottom-[calc(100%+0.75rem)] right-0 w-72 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 text-left shadow-[var(--shadow)]">

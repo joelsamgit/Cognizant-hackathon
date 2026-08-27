@@ -290,6 +290,7 @@ export function PlantDashboard({ user, onUserChange, onLogout }: PlantDashboardP
                       <PlantCard
                         key={plant.id}
                         plant={plant}
+                        userPets={user.pets}
                         watering={wateringIds.has(plant.id)}
                         xpGain={xpGains[plant.id]}
                         onWater={(target) => void handleWater(target)}

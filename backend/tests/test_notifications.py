@@ -126,6 +126,49 @@ def test_dispatch_sends_once_per_plant_and_local_day(db_session: Session):
     assert "Nori is overdue" in calls[0]["data"]
 
 
+def test_dispatch_sends_needs_water_soon_on_next_scheduler_run(db_session: Session):
+    now = datetime(2026, 8, 25, 12, 5, tzinfo=timezone.utc)
+    user = create_user(db_session, "soon@example.com")
+    plant = Plant(
+        user_id=user.id,
+        nickname="Fern",
+        species="Calathea Orbifolia",
+        room="Office",
+        sunlight="Indirect Light",
+        watering_frequency=7,
+        last_watered=now - timedelta(days=4),
+    )
+    subscription = PushSubscription(
+        user_id=user.id,
+        endpoint="https://push.example.test/subscription/soon",
+        p256dh="public-encryption-key",
+        auth="auth-secret",
+        timezone="UTC",
+        reminder_time="09:00",
+        enabled=True,
+    )
+    db_session.add_all([plant, subscription])
+    db_session.commit()
+
+    calls = []
+
+    def fake_sender(**kwargs):
+        calls.append(kwargs)
+
+    settings = Settings(
+        database_url="sqlite+pysqlite:///:memory:",
+        app_env="test",
+        vapid_public_key="public-vapid-key",
+        vapid_private_key="private-vapid-key",
+        vapid_subject="mailto:test@example.com",
+    )
+
+    result = dispatch_due_notifications(db_session, settings, now=now, sender=fake_sender)
+
+    assert result.sent == 1
+    assert "needs water soon" in calls[0]["data"]
+
+
 def test_pubsub_dispatch_queues_and_worker_delivers_idempotently(db_session: Session):
     now = datetime(2026, 8, 25, 9, 5, tzinfo=timezone.utc)
     user = create_user(db_session, "pubsub@example.com")

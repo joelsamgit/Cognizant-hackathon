@@ -16,8 +16,20 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-PROJECT_ID="${GCP_PROJECT_ID:?Set GCP_PROJECT_ID to your GCP project id}"
-GROQ_API_KEY_VALUE="${GROQ_API_KEY:?Set GROQ_API_KEY to your Groq API key}"
+# Load project settings and secrets from the repository environment file when present.
+if [[ -f .env ]]; then
+  set -a
+  source .env
+  set +a
+fi
+
+PROJECT_ID="${GCP_PROJECT_ID:-$(gcloud config get-value project 2>/dev/null)}"
+if [[ -z "${PROJECT_ID}" || "${PROJECT_ID}" == "(unset)" ]]; then
+  echo "Set GCP_PROJECT_ID or configure an active gcloud project." >&2
+  exit 1
+fi
+GROQ_API_KEY_VALUE="${GROQ_API_KEY:?Set GROQ_API_KEY in .env or the shell environment}"
+GOOGLE_CLIENT_ID_VALUE="${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
 REGION="${GCP_REGION:-asia-south1}"
 
 REPO="plant-guardian"
@@ -37,11 +49,6 @@ FRONTEND_SA_NAME="plant-guardian-frontend"
 SCHEDULER_SA_NAME="plant-guardian-scheduler"
 PUBSUB_PUSH_SA_NAME="plant-guardian-pubsub-push"
 
-# Load DB credentials from .env when present.
-if [[ -f .env ]]; then
-  # shellcheck disable=SC1091
-  set -a; source .env; set +a
-fi
 POSTGRES_USER="${POSTGRES_USER:-$SQL_USER}"
 POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-$(openssl rand -hex 16)}"
 VAPID_PUBLIC_KEY_VALUE="${VAPID_PUBLIC_KEY:-}"
@@ -192,7 +199,7 @@ VACATION_URL="$(deploy_service vacation-mode \
 
 echo "==> Building backend image"
 gcloud builds submit ./backend -t "${REGISTRY}/backend:latest"
-BACKEND_ENV_VARS="DATABASE_URL=${CLOUDSQL_URL},APP_ENV=production,AUTO_SEED=true,SEED_STARTER_PLANTS=true,SESSION_LIFETIME_DAYS=7,CORS_ORIGINS=*,GCP_PROJECT_ID=${PROJECT_ID}"
+BACKEND_ENV_VARS="DATABASE_URL=${CLOUDSQL_URL},APP_ENV=production,AUTO_SEED=true,SEED_STARTER_PLANTS=false,SESSION_LIFETIME_DAYS=7,CORS_ORIGINS=*,GCP_PROJECT_ID=${PROJECT_ID}"
 BACKEND_SECRET_ARGS=()
 if [[ "${NOTIFICATIONS_CONFIGURED}" == "true" ]]; then
   BACKEND_ENV_VARS="${BACKEND_ENV_VARS},VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY_VALUE},VAPID_SUBJECT=${VAPID_SUBJECT_VALUE},PUBSUB_NOTIFICATION_TOPIC=${PUBSUB_TOPIC},PUBSUB_PUSH_SERVICE_ACCOUNT=${PUBSUB_PUSH_SA},SCHEDULER_SERVICE_ACCOUNT=${SCHEDULER_SA}"
@@ -259,7 +266,7 @@ fi
 
 echo "==> Building frontend image (API URLs baked in at build time)"
 gcloud builds submit ./frontend --config deploy/cloudbuild-frontend.yaml \
-  --substitutions "_API_URL=${BACKEND_URL},_VACATION_API_URL=${VACATION_URL},_IMAGE=${REGISTRY}/frontend:latest"
+  --substitutions "_API_URL=${BACKEND_URL},_VACATION_API_URL=${VACATION_URL},_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID_VALUE},_IMAGE=${REGISTRY}/frontend:latest"
 FRONTEND_URL="$(deploy_service frontend \
   "${FRONTEND_SA}" \
   --image "${REGISTRY}/frontend:latest" \
